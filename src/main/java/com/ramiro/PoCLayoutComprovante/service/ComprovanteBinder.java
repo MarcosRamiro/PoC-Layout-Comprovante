@@ -42,10 +42,7 @@ public class ComprovanteBinder {
 	private void tratarGrupos(GrupoDto grupo) {
 
 		grupo.setTitulo(serviceBind.bind(grupo.getTitulo(), json));
-
-		//if (grupo.getTipo().toLowerCase().equals("bloco") || (grupo.getTipo().toLowerCase().equals("texto"))) {
-			tratarDetalhesGrupos(grupo.getDetalhesGrupos());
-		//}
+		tratarDetalhesGrupos(grupo.getDetalhesGrupos());
 
 	}
 
@@ -55,18 +52,8 @@ public class ComprovanteBinder {
 			return;
 
 		for (DetalheGrupoDto detalhe : detalhes) {
-			tratarDetalheGrupo(detalhe);
+			detalhe.tratarAtributos(serviceBind, json);
 		}
 
 	}
-
-	private void tratarDetalheGrupo(DetalheGrupoDto detalhe){
-		if (detalhe instanceof DetalheGrupoTipoBlocoDto){
-			((DetalheGrupoTipoBlocoDto) detalhe).setTituloAtributo(serviceBind.bind(((DetalheGrupoTipoBlocoDto) detalhe).getTituloAtributo(), json));
-			((DetalheGrupoTipoBlocoDto) detalhe).setValorAtributo(serviceBind.bind(((DetalheGrupoTipoBlocoDto) detalhe).getValorAtributo(), json));
-		} else if (detalhe instanceof DetalheGrupoTipoTextoDto){
-			((DetalheGrupoTipoTextoDto) detalhe).setTexto(serviceBind.bind(((DetalheGrupoTipoTextoDto) detalhe).getTexto(), json));
-		}
-	}
-
 }

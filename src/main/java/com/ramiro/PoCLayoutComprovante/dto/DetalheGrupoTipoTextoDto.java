@@ -1,5 +1,7 @@
 package com.ramiro.PoCLayoutComprovante.dto;
 
+import com.ramiro.PoCLayoutComprovante.service.ServiceBind;
+
 public class DetalheGrupoTipoTextoDto implements DetalheGrupoDto {
 
     private int ordenacao;
@@ -32,5 +34,10 @@ public class DetalheGrupoTipoTextoDto implements DetalheGrupoDto {
 
     public void setVisibilidade(boolean visibilidade) {
         this.visibilidade = visibilidade;
+    }
+
+    @Override
+    public void tratarAtributos(ServiceBind serviceBind, String json) {
+        this.setTexto(serviceBind.bind(this.getTexto(), json));
     }
 }
