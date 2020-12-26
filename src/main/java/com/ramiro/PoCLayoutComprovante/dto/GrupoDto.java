@@ -9,7 +9,7 @@ public class GrupoDto {
 	private int ordenacao;
 	private String titulo;
 	private String tipo;
-	private List<? extends DetalheGrupoDto> detalhesGrupos;
+	private List<DetalheGrupoDto> detalhesGrupos;
 		
 	public String getTipo() {
 		return tipo;
@@ -36,11 +36,11 @@ public class GrupoDto {
 	}
 
 	@JsonGetter("detalhes")
-	public List<? extends DetalheGrupoDto> getDetalhesGrupos() {
+	public List<DetalheGrupoDto> getDetalhesGrupos() {
 		return detalhesGrupos;
 	}
 
-	public void setDetalhesGrupos(List<? extends DetalheGrupoDto> detalhesGrupos) {
+	public void setDetalhesGrupos(List<DetalheGrupoDto> detalhesGrupos) {
 		this.detalhesGrupos = detalhesGrupos;
 	}
 

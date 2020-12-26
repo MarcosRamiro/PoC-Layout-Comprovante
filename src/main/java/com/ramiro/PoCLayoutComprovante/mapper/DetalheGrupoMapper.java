@@ -17,7 +17,7 @@ public class DetalheGrupoMapper {
     private  static final String TEXTO = "texto";
 
 
-    public List<? extends DetalheGrupoDto> transformar(Grupo grupo) {
+    public List<DetalheGrupoDto> transformar(Grupo grupo) {
 
         if (grupo.getTipo().toLowerCase().equals("bloco"))
                 return obterDetalheGrupoTipoBloco(grupo);
@@ -27,10 +27,9 @@ public class DetalheGrupoMapper {
              return null;
 
         return null;
-
     }
 
-    private  List<DetalheGrupoTipoBlocoDto> obterDetalheGrupoTipoBloco(Grupo grupo){
+    private  List<DetalheGrupoDto> obterDetalheGrupoTipoBloco(Grupo grupo){
 
         return grupo.getDetalhes().stream().map( detalhe -> {
             DetalheGrupoTipoBlocoDto detalheGrupoTipoBlocoDto = new DetalheGrupoTipoBlocoDto();
@@ -40,10 +39,9 @@ public class DetalheGrupoMapper {
             detalheGrupoTipoBlocoDto.setValorAtributo(detalhe.obterConteudoDoAtributo(VALOR_ATRIBUTO));
             return detalheGrupoTipoBlocoDto;
         }).collect(Collectors.toList());
-
     }
 
-    private  List<DetalheGrupoTipoTextoDto> obterDetalheGrupoTipoTexto(Grupo grupo){
+    private  List<DetalheGrupoDto> obterDetalheGrupoTipoTexto(Grupo grupo){
 
         return grupo.getDetalhes().stream().map( detalhe -> {
 
@@ -53,6 +51,5 @@ public class DetalheGrupoMapper {
             detalheGrupoTipoTextoDto.setTexto(detalhe.obterConteudoDoAtributo(TEXTO));
             return detalheGrupoTipoTextoDto;
         }).collect(Collectors.toList());
-
     }
 }

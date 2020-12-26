@@ -46,7 +46,7 @@ public class ComprovanteBinder {
 
 	}
 
-	private void tratarDetalhesGrupos(List<? extends  DetalheGrupoDto> detalhes) {
+	private void tratarDetalhesGrupos(List<DetalheGrupoDto> detalhes) {
 
 		if(detalhes == null)
 			return;
