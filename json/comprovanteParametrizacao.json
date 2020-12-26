@@ -1,0 +1,43 @@
+{
+	"id":"123",
+	"titulo":"Teste Titulo Comprovante T3",
+	"descricao":"configuracao do comprovante do RFB V1",
+	"tipo":"RFB",
+	"versao":"v1",
+	"grupos":[
+				{
+					"ordenacao":0,
+					"titulo":"Dados do Pagamento",
+					"tipo":"bloco",
+					"detalhes": [
+									{
+										"ordenacao":0,
+										"visibilidade":true,
+										"nomeAtributo":"Esse é meu código de barras",
+										"valorAtributo":"$.detalhes[?(@.nomeAtributo == 'código de barras')].valorAtributo"
+									},
+									{
+										"ordenacao":1,
+										"visibilidade":true,
+										"nomeAtributo":"aqui está o valor",
+										"valorAtributo":"$.detalhes[?(@.nomeAtributo == 'valor do pagamento')].valorAtributo"
+									}
+					
+								]
+				},
+				{
+					"ordenacao":1,
+					"titulo":"Segundo grupo",
+					"tipo":"bloco",
+					"detalhes": [
+									{
+										"ordenacao":0,
+										"visibilidade":true,
+										"nomeAtributo":"Data do Pagto",
+										"valorAtributo":"$.detalhes[?(@.nomeAtributo == 'data do pagamento')].valorAtributo"
+									}
+					
+								]
+				}
+			]
+}

@@ -1,0 +1,28 @@
+{
+	"id":123,
+	"titulo":"Teste Titulo Comprovante T3",
+	"tipo":"RFB",
+	"versao":"v1",
+	"detalhes":[
+		{
+			"nomeAtributo":"código de barras",
+			"valorAtributo":"1234567890"
+		},
+		{
+			"nomeAtributo":"data do pagamento",
+			"valorAtributo":"30/11/2020"
+		},
+		{
+			"nomeAtributo":"valor do pagamento",
+			"valorAtributo":"R$ 200,15"
+		},
+		{
+			"nomeAtributo":"referência",
+			"valorAtributo":"123-8"
+		},
+		{
+			"nomeAtributo":"versao autenticador",
+			"valorAtributo":"v123.45"
+		}
+	]
+}
