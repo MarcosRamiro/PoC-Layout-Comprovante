@@ -2,10 +2,6 @@ package com.ramiro.PoCLayoutComprovante.dto;
 
 import java.util.List;
 
-import com.ramiro.PoCLayoutComprovante.form.ComprovanteT3;
-import com.ramiro.PoCLayoutComprovante.model.Comprovante;
-import com.ramiro.PoCLayoutComprovante.model.Grupo;
-
 public class ComprovanteDto {
 	
 	private String id;

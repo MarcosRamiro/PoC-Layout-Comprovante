@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.ramiro.PoCLayoutComprovante.form.ComprovanteT3;
 import com.ramiro.PoCLayoutComprovante.model.Comprovante;
 
+// @RequestScope // necessario pois guarde estado (json)
 @Service
 public class ComprovanteBinder {
 
@@ -19,43 +20,49 @@ public class ComprovanteBinder {
 	@Autowired
 	private ComprovanteMapper comprovanteMapper;
 
-	private String json;
+	//private String json;
 
 	public ComprovanteDto bind(ComprovanteT3 comprovanteT3, Comprovante comprovante) {
 
-		this.json= new GsonBuilder().setPrettyPrinting().create().toJson(comprovanteT3);
+		String json= new GsonBuilder().setPrettyPrinting().create().toJson(comprovanteT3);
 
 		ComprovanteDto comprovanteDto = comprovanteMapper.transformar(comprovante);
 
 		comprovanteDto.setId(comprovanteT3.getId());
 
 		comprovanteDto.setTitulo(serviceBind.bind(comprovanteDto.getTitulo(), json));
+		try
+		{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException ex)
+		{
+			Thread.currentThread().interrupt();
+		}
 		comprovanteDto.setId(serviceBind.bind(comprovanteDto.getId(), json));
 		comprovanteDto.setTipo(serviceBind.bind(comprovanteDto.getTipo(), json));
 		comprovanteDto.setVersao(serviceBind.bind(comprovanteDto.getVersao(), json));
 
 		comprovanteDto.getGrupos()
 				.stream()
-				.forEach(this::tratarGrupos);
+				.forEach(detalhe -> tratarGrupos(detalhe, json));
 
 		return comprovanteDto;
 	}
 
-	private void tratarGrupos(GrupoDto grupo) {
+	private void tratarGrupos(GrupoDto grupo, String json) {
 
 		grupo.setTitulo(serviceBind.bind(grupo.getTitulo(), json));
-		tratarDetalhesGrupos(grupo.getDetalhesGrupos());
+		tratarDetalhesGrupos(grupo.getDetalhesGrupos(), json);
 
 	}
 
-	private void tratarDetalhesGrupos(List<DetalheGrupoDto> detalhes) {
+	private void tratarDetalhesGrupos(List<DetalheGrupoDto> detalhes, String json) {
 
 		if(detalhes == null)
 			return;
-
 		for (DetalheGrupoDto detalhe : detalhes) {
 			detalhe.tratarAtributos(serviceBind, json);
 		}
-
 	}
 }
