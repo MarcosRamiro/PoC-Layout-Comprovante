@@ -25,7 +25,9 @@ public class ComprovanteBinder {
 
 		this.json= new GsonBuilder().setPrettyPrinting().create().toJson(comprovanteT3);
 
-		ComprovanteDto comprovanteDto = comprovanteMapper.transformar(comprovanteT3, comprovante);
+		ComprovanteDto comprovanteDto = comprovanteMapper.transformar(comprovante);
+
+		comprovanteDto.setId(comprovanteT3.getId());
 
 		comprovanteDto.setTitulo(serviceBind.bind(comprovanteDto.getTitulo(), json));
 		comprovanteDto.setId(serviceBind.bind(comprovanteDto.getId(), json));

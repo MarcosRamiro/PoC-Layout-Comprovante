@@ -44,7 +44,6 @@ public class DetalheGrupoMapper {
     private  List<DetalheGrupoDto> obterDetalheGrupoTipoTexto(Grupo grupo){
 
         return grupo.getDetalhes().stream().map( detalhe -> {
-
             DetalheGrupoTipoTextoDto detalheGrupoTipoTextoDto = new DetalheGrupoTipoTextoDto();
             detalheGrupoTipoTextoDto.setOrdenacao(detalhe.getOrdenacao());
             detalheGrupoTipoTextoDto.setVisibilidade(detalhe.isVisibilidade());
