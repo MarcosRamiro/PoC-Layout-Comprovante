@@ -34,14 +34,18 @@ public class ComprovanteController {
 	@GetMapping("/detalhe")
 	public ResponseEntity<ComprovanteDto> obterComprovante(@RequestBody ComprovanteT3 comprovanteT3) {
 
-		System.out.println("ComprovanteT3.Id -> " + comprovanteT3.getId());
+		Instant inicio = Instant.now();
 
 		List<Comprovante> listaComprovante = comprovanteRepository.findByTipoIgnoreCaseAndVersaoIgnoreCase(comprovanteT3.getTipo(), comprovanteT3.getVersao());
 		if(listaComprovante != null && listaComprovante.stream().count() > 0) {
 			Optional<Comprovante> primeiroComprovante = listaComprovante.stream().findFirst();
 
 			if(primeiroComprovante.isPresent()){
-				return ResponseEntity.ok(comprovanteBinder.bind(comprovanteT3, primeiroComprovante.get()));
+				ComprovanteDto bind = comprovanteBinder.bind(comprovanteT3, primeiroComprovante.get());
+				Instant fim = Instant.now();
+				Duration duracao = Duration.between(inicio, fim);
+				System.out.println("Tempo -> " + duracao.toMillis());
+				return ResponseEntity.ok(bind);
 			}
 		}
 

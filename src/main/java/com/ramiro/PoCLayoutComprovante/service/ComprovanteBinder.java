@@ -20,8 +20,6 @@ public class ComprovanteBinder {
 	@Autowired
 	private ComprovanteMapper comprovanteMapper;
 
-	//private String json;
-
 	public ComprovanteDto bind(ComprovanteT3 comprovanteT3, Comprovante comprovante) {
 
 		String json= new GsonBuilder().setPrettyPrinting().create().toJson(comprovanteT3);
@@ -31,14 +29,6 @@ public class ComprovanteBinder {
 		comprovanteDto.setId(comprovanteT3.getId());
 
 		comprovanteDto.setTitulo(serviceBind.bind(comprovanteDto.getTitulo(), json));
-		try
-		{
-			Thread.sleep(1000);
-		}
-		catch(InterruptedException ex)
-		{
-			Thread.currentThread().interrupt();
-		}
 		comprovanteDto.setId(serviceBind.bind(comprovanteDto.getId(), json));
 		comprovanteDto.setTipo(serviceBind.bind(comprovanteDto.getTipo(), json));
 		comprovanteDto.setVersao(serviceBind.bind(comprovanteDto.getVersao(), json));
@@ -59,8 +49,8 @@ public class ComprovanteBinder {
 
 	private void tratarDetalhesGrupos(List<DetalheGrupoDto> detalhes, String json) {
 
-		if(detalhes == null)
-			return;
+		if(detalhes == null) return;
+
 		for (DetalheGrupoDto detalhe : detalhes) {
 			detalhe.tratarAtributos(serviceBind, json);
 		}
