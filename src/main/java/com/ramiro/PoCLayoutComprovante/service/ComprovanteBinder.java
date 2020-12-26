@@ -2,12 +2,13 @@ package com.ramiro.PoCLayoutComprovante.service;
 
 import java.util.List;
 
-import com.ramiro.PoCLayoutComprovante.dto.*;
-import com.ramiro.PoCLayoutComprovante.mapper.ComprovanteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.GsonBuilder;
+
+import com.ramiro.PoCLayoutComprovante.dto.*;
+import com.ramiro.PoCLayoutComprovante.mapper.ComprovanteMapper;
 import com.ramiro.PoCLayoutComprovante.form.ComprovanteT3;
 import com.ramiro.PoCLayoutComprovante.model.Comprovante;
 
@@ -22,7 +23,7 @@ public class ComprovanteBinder {
 
 	public ComprovanteDto bind(ComprovanteT3 comprovanteT3, Comprovante comprovante) {
 
-		String json= new GsonBuilder().setPrettyPrinting().create().toJson(comprovanteT3);
+		String json = new GsonBuilder().setPrettyPrinting().create().toJson(comprovanteT3);
 
 		ComprovanteDto comprovanteDto = comprovanteMapper.transformar(comprovante);
 
