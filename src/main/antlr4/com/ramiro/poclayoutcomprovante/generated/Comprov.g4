@@ -32,17 +32,5 @@ MAIS: '+';
 fragment FLOAT: DIGITO+ '.' DIGITO*;
 fragment DIGITO: [0-9];
 fragment ESC: '\\"'|'\\\\';
-fragment CARACTER: [a-z|A-Z|0-9];
-fragment SIMBOLOS: '['
-			| ']'
-			| '$'
-    		| '='
-			| '\\'
-			| '&'
-			| '('
-			| ')'
-			| '.'
-			| '@'
-			| '?'
-			;
+
 WS: [ \t\n\r ]+ -> skip ;

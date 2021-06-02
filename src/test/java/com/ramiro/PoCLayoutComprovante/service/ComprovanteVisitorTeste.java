@@ -15,12 +15,7 @@ public class ComprovanteVisitorTeste {
 	
 	@Test
 	public void deveCompararDoisInteriosIguais() {
-		/*
-		Cliente cliente = new Cliente();
-		cliente.setNome("marcos");
-		cliente.setIdade("31");
-		*/
-		//long start = System.currentTimeMillis();
+
 		ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(" 22 == 22 "));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ComprovParser parser = new ComprovParser(tokens);
@@ -31,13 +26,6 @@ public class ComprovanteVisitorTeste {
         
         assertEquals(visitor.getResultado(), "true");
         
-        //long finish = System.currentTimeMillis();
-        //long timeElapsed = finish - start;
-        
-        //System.out.println(tree.toStringTree());
-        //System.out.println(visitor.getResultado());
-        
-        //System.out.println("Tempo: " + timeElapsed);
 	}
 	
 	@Test
