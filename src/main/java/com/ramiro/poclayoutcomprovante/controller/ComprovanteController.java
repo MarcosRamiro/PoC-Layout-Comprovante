@@ -29,9 +29,8 @@ public class ComprovanteController {
 	@Autowired
 	ComprovanteMapper comprovanteMapper;
 
-	private String tempo;
 	
-	@GetMapping("/detalhe")
+	@PostMapping("/detalhe")
 	public ResponseEntity<ComprovanteDto> obterComprovante(@RequestBody ComprovanteT3 comprovanteT3) {
 
 		Instant inicio = Instant.now();
