@@ -1,4 +1,4 @@
-package com.ramiro.PoCLayoutComprovante.model;
+package com.ramiro.poclayoutcomprovante.model;
 
 import java.io.Serializable;
 import java.util.List;

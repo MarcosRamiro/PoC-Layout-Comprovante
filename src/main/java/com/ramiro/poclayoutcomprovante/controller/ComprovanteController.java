@@ -1,22 +1,22 @@
-package com.ramiro.PoCLayoutComprovante.controller;
+package com.ramiro.poclayoutcomprovante.controller;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-import com.ramiro.PoCLayoutComprovante.mapper.ComprovanteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.ramiro.PoCLayoutComprovante.dto.ComprovanteDto;
-import com.ramiro.PoCLayoutComprovante.form.ComprovanteT3;
-import com.ramiro.PoCLayoutComprovante.model.Comprovante;
-import com.ramiro.PoCLayoutComprovante.repository.ComprovanteRepository;
-import com.ramiro.PoCLayoutComprovante.service.ComprovanteBinder;
 import org.springframework.web.context.annotation.RequestScope;
+
+import com.ramiro.poclayoutcomprovante.dto.ComprovanteDto;
+import com.ramiro.poclayoutcomprovante.form.ComprovanteT3;
+import com.ramiro.poclayoutcomprovante.mapper.ComprovanteMapper;
+import com.ramiro.poclayoutcomprovante.model.Comprovante;
+import com.ramiro.poclayoutcomprovante.repository.ComprovanteRepository;
+import com.ramiro.poclayoutcomprovante.service.ComprovanteBinder;
 
 @RestController
 @RequestMapping("/comprovante")

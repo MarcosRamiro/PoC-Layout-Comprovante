@@ -18,7 +18,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -33,9 +33,9 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-		&quot;id&quot;:123456,&#xd;
+		&quot;id&quot;:100000000,&#xd;
 		&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
-		&quot;tipo&quot;:&quot;rfb&quot;,&#xd;
+		&quot;tipo&quot;:&quot;\&quot;rfb\&quot;&quot;,&#xd;
 		&quot;versao&quot;:&quot;2&quot;,&#xd;
 		&quot;detalhes&quot;:[&#xd;
 			{&#xd;
@@ -77,7 +77,7 @@
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/comprovante/detalhe</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -138,7 +138,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 100,88</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -228,7 +228,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -245,7 +245,7 @@
                 <stringProp name="Argument.value">{&#xd;
 		&quot;id&quot;:100000000,&#xd;
 		&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
-		&quot;tipo&quot;:&quot;rfb&quot;,&#xd;
+		&quot;tipo&quot;:&quot;\&quot;rfb\&quot;&quot;,&#xd;
 		&quot;versao&quot;:&quot;2&quot;,&#xd;
 		&quot;detalhes&quot;:[&#xd;
 			{&#xd;
@@ -287,7 +287,7 @@
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/comprovante/detalhe</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -348,7 +348,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 200,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -438,7 +438,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -455,7 +455,7 @@
                 <stringProp name="Argument.value">{&#xd;
 		&quot;id&quot;:100000000,&#xd;
 		&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
-		&quot;tipo&quot;:&quot;rfb&quot;,&#xd;
+		&quot;tipo&quot;:&quot;\&quot;rfb\&quot;&quot;,&#xd;
 		&quot;versao&quot;:&quot;2&quot;,&#xd;
 		&quot;detalhes&quot;:[&#xd;
 			{&#xd;
@@ -497,7 +497,7 @@
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/comprovante/detalhe</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -558,7 +558,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 300,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -648,7 +648,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -665,7 +665,7 @@
                 <stringProp name="Argument.value">{&#xd;
 		&quot;id&quot;:100000000,&#xd;
 		&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
-		&quot;tipo&quot;:&quot;rfb&quot;,&#xd;
+		&quot;tipo&quot;:&quot;\&quot;rfb\&quot;&quot;,&#xd;
 		&quot;versao&quot;:&quot;2&quot;,&#xd;
 		&quot;detalhes&quot;:[&#xd;
 			{&#xd;
@@ -707,7 +707,7 @@
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/comprovante/detalhe</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -768,7 +768,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 400,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -858,7 +858,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -875,7 +875,7 @@
                 <stringProp name="Argument.value">{&#xd;
 		&quot;id&quot;:100000000,&#xd;
 		&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
-		&quot;tipo&quot;:&quot;rfb&quot;,&#xd;
+		&quot;tipo&quot;:&quot;\&quot;rfb\&quot;&quot;,&#xd;
 		&quot;versao&quot;:&quot;2&quot;,&#xd;
 		&quot;detalhes&quot;:[&#xd;
 			{&#xd;
@@ -917,7 +917,7 @@
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/comprovante/detalhe</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -978,7 +978,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 500,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>

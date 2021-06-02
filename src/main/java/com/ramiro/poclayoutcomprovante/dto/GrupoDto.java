@@ -1,4 +1,4 @@
-package com.ramiro.PoCLayoutComprovante.dto;
+package com.ramiro.poclayoutcomprovante.dto;
 
 import java.util.List;
 

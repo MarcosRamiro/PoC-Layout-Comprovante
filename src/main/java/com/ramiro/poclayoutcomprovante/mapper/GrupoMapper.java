@@ -1,9 +1,10 @@
-package com.ramiro.PoCLayoutComprovante.mapper;
+package com.ramiro.poclayoutcomprovante.mapper;
 
-import com.ramiro.PoCLayoutComprovante.dto.GrupoDto;
-import com.ramiro.PoCLayoutComprovante.model.Grupo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.ramiro.poclayoutcomprovante.dto.GrupoDto;
+import com.ramiro.poclayoutcomprovante.model.Grupo;
 
 import java.util.List;
 import java.util.stream.Collectors;

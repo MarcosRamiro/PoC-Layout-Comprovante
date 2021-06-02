@@ -1,12 +1,12 @@
-package com.ramiro.PoCLayoutComprovante.mapper;
-
-import com.ramiro.PoCLayoutComprovante.dto.ComprovanteDto;
-import com.ramiro.PoCLayoutComprovante.dto.GrupoDto;
-import com.ramiro.PoCLayoutComprovante.form.ComprovanteT3;
-import com.ramiro.PoCLayoutComprovante.model.Comprovante;
+package com.ramiro.poclayoutcomprovante.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.ramiro.poclayoutcomprovante.dto.ComprovanteDto;
+import com.ramiro.poclayoutcomprovante.dto.GrupoDto;
+import com.ramiro.poclayoutcomprovante.form.ComprovanteT3;
+import com.ramiro.poclayoutcomprovante.model.Comprovante;
 
 @Component
 public class ComprovanteMapper {

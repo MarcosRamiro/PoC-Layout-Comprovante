@@ -1,4 +1,4 @@
-package com.ramiro.PoCLayoutComprovante.form;
+package com.ramiro.poclayoutcomprovante.form;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 

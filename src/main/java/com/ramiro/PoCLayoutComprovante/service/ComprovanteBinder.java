@@ -1,18 +1,15 @@
-package com.ramiro.PoCLayoutComprovante.service;
+package com.ramiro.poclayoutcomprovante.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.GsonBuilder;
+import com.ramiro.poclayoutcomprovante.dto.*;
+import com.ramiro.poclayoutcomprovante.form.ComprovanteT3;
+import com.ramiro.poclayoutcomprovante.mapper.ComprovanteMapper;
+import com.ramiro.poclayoutcomprovante.model.Comprovante;
 
-import com.ramiro.PoCLayoutComprovante.dto.*;
-import com.ramiro.PoCLayoutComprovante.mapper.ComprovanteMapper;
-import com.ramiro.PoCLayoutComprovante.form.ComprovanteT3;
-import com.ramiro.PoCLayoutComprovante.model.Comprovante;
-
-// @RequestScope // necessario pois guarde estado (json)
 @Service
 public class ComprovanteBinder {
 
@@ -23,37 +20,35 @@ public class ComprovanteBinder {
 
 	public ComprovanteDto bind(ComprovanteT3 comprovanteT3, Comprovante comprovante) {
 
-		String json = new GsonBuilder().setPrettyPrinting().create().toJson(comprovanteT3);
-
 		ComprovanteDto comprovanteDto = comprovanteMapper.transformar(comprovante);
 
 		comprovanteDto.setId(comprovanteT3.getId());
 
-		comprovanteDto.setTitulo(serviceBind.bind(comprovanteDto.getTitulo(), json));
-		comprovanteDto.setId(serviceBind.bind(comprovanteDto.getId(), json));
-		comprovanteDto.setTipo(serviceBind.bind(comprovanteDto.getTipo(), json));
-		comprovanteDto.setVersao(serviceBind.bind(comprovanteDto.getVersao(), json));
+		comprovanteDto.setTitulo(serviceBind.bind(comprovanteDto.getTitulo(), comprovanteT3));
+		comprovanteDto.setId(serviceBind.bind(comprovanteDto.getId(), comprovanteT3));
+		comprovanteDto.setTipo(serviceBind.bind(comprovanteDto.getTipo(), comprovanteT3));
+		comprovanteDto.setVersao(serviceBind.bind(comprovanteDto.getVersao(), comprovanteT3));
 
 		comprovanteDto.getGrupos()
 				.stream()
-				.forEach(detalhe -> tratarGrupos(detalhe, json));
+				.forEach(detalhe -> tratarGrupos(detalhe, comprovanteT3));
 
 		return comprovanteDto;
 	}
 
-	private void tratarGrupos(GrupoDto grupo, String json) {
+	private void tratarGrupos(GrupoDto grupo, ComprovanteT3 comprovanteT3) {
 
-		grupo.setTitulo(serviceBind.bind(grupo.getTitulo(), json));
-		tratarDetalhesGrupos(grupo.getDetalhesGrupos(), json);
+		grupo.setTitulo(serviceBind.bind(grupo.getTitulo(), comprovanteT3));
+		tratarDetalhesGrupos(grupo.getDetalhesGrupos(), comprovanteT3);
 
 	}
 
-	private void tratarDetalhesGrupos(List<DetalheGrupoDto> detalhes, String json) {
+	private void tratarDetalhesGrupos(List<DetalheGrupoDto> detalhes, ComprovanteT3 comprovanteT3) {
 
 		if(detalhes == null) return;
 
 		for (DetalheGrupoDto detalhe : detalhes) {
-			detalhe.tratarAtributos(serviceBind, json);
+			detalhe.tratarAtributos(dado -> serviceBind.bind(dado, comprovanteT3));
 		}
 	}
 }

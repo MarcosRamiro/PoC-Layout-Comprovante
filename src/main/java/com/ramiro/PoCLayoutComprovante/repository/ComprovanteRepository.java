@@ -1,8 +1,8 @@
-package com.ramiro.PoCLayoutComprovante.repository;
+package com.ramiro.poclayoutcomprovante.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramiro.PoCLayoutComprovante.model.Comprovante;
+import com.ramiro.poclayoutcomprovante.model.Comprovante;
 
 import java.util.List;
 

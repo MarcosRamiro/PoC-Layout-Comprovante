@@ -1,9 +1,12 @@
-package com.ramiro.PoCLayoutComprovante.form;
+package com.ramiro.poclayoutcomprovante.dto;
 
-public class DetalheComprovanteT3 {
+import java.util.function.Function;
+
+public class DetalheGrupoTipoBlocoDto extends DetalheGrupoDto {
 
 	private String tituloAtributo;
 	private String valorAtributo;
+
 	public String getTituloAtributo() {
 		return tituloAtributo;
 	}
@@ -17,5 +20,10 @@ public class DetalheComprovanteT3 {
 		this.valorAtributo = valorAtributo;
 	}
 
+	@Override
+	public void tratarAtributos(Function<String, String> funcao) {
+		this.setTituloAtributo(funcao.apply(this.getTituloAtributo()));
+		this.setValorAtributo(funcao.apply(this.getValorAtributo()));
+	}
 
 }

@@ -1,11 +1,12 @@
-package com.ramiro.PoCLayoutComprovante.mapper;
+package com.ramiro.poclayoutcomprovante.mapper;
 
-import com.ramiro.PoCLayoutComprovante.dto.DetalheGrupoDto;
-import com.ramiro.PoCLayoutComprovante.dto.DetalheGrupoTipoBlocoDto;
-import com.ramiro.PoCLayoutComprovante.dto.DetalheGrupoTipoTextoDto;
-import com.ramiro.PoCLayoutComprovante.model.Grupo;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
+
+import com.ramiro.poclayoutcomprovante.dto.DetalheGrupoDto;
+import com.ramiro.poclayoutcomprovante.dto.DetalheGrupoTipoBlocoDto;
+import com.ramiro.poclayoutcomprovante.dto.DetalheGrupoTipoTextoDto;
+import com.ramiro.poclayoutcomprovante.model.Grupo;
 
 import java.util.List;
 import java.util.stream.Collectors;

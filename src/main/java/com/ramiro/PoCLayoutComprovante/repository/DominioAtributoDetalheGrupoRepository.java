@@ -1,8 +1,8 @@
-package com.ramiro.PoCLayoutComprovante.repository;
+package com.ramiro.poclayoutcomprovante.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramiro.PoCLayoutComprovante.model.DominioAtributoDetalheGrupo;
+import com.ramiro.poclayoutcomprovante.model.DominioAtributoDetalheGrupo;
 
 public interface DominioAtributoDetalheGrupoRepository extends JpaRepository<DominioAtributoDetalheGrupo, Long> {
 

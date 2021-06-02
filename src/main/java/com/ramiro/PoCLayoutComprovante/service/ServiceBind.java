@@ -1,30 +1,26 @@
-package com.ramiro.PoCLayoutComprovante.service;
+package com.ramiro.poclayoutcomprovante.service;
 
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.springframework.stereotype.Service;
 
-import com.jayway.jsonpath.JsonPath;
+import com.ramiro.poclayoutcomprovante.generated.ComprovLexer;
+import com.ramiro.poclayoutcomprovante.generated.ComprovParser;
 
-import java.util.List;
 
 @Service
 public class ServiceBind {
 
-		public String bind(String padrao, String json) {
+		public String bind(String padrao, Object object) {
 
-			if(padrao == null || json == null)
-				return null;
-
-			if(padrao.contains("$")) {
-				Object obj = JsonPath.read(json, padrao);
-
-					if(obj instanceof List<?>){
-						for (Object primeiroObjeto: (List<?>) obj) {
-							return primeiroObjeto == null ? "" : primeiroObjeto.toString();
-						}
-					}
-
-					return obj == null ? "" : obj.toString();
-			}
-			return padrao;
+			ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(padrao));
+	        CommonTokenStream tokens = new CommonTokenStream(lexer);
+	        ComprovParser parser = new ComprovParser(tokens);
+	        ParseTree tree = parser.programa();
+	        ComprovanteVisitor visitor = new ComprovanteVisitor(object, parser);
+	        visitor.visit(tree);
+	        
+	        return visitor.getResultado();
 		}
 }

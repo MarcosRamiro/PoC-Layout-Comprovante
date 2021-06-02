@@ -1,28 +1,37 @@
 {
-	"id":123,
-	"titulo":"Teste Titulo Comprovante T3",
-	"tipo":"RFB",
-	"versao":"v1",
+	"id":100000000,
+	"titulo":"titulo t3 ramimar",
+	"tipo":"rfb",
+	"versao":"2",
 	"detalhes":[
 		{
-			"nomeAtributo":"código de barras",
+			"tituloAtributo":"codigo de barras",
 			"valorAtributo":"1234567890"
+			
 		},
 		{
-			"nomeAtributo":"data do pagamento",
+			"tituloAtributo":"data do pagamento",
 			"valorAtributo":"30/11/2020"
 		},
 		{
-			"nomeAtributo":"valor do pagamento",
-			"valorAtributo":"R$ 200,15"
+			"tituloAtributo":"valor do pagamento",
+			"valorAtributo":"R$ 301,45"
 		},
 		{
-			"nomeAtributo":"referência",
+			"tituloAtributo":"referência",
 			"valorAtributo":"123-8"
 		},
 		{
-			"nomeAtributo":"versao autenticador",
+			"tituloAtributo":"versao autenticador",
 			"valorAtributo":"v123.45"
+		},
+		{
+			"tituloAtributo":"mensagem_t3",
+			"valorAtributo":"mensagem do T3"
+		},
+		{
+			"tituloAtributo":"titulo_mensagem_t3",
+			"valorAtributo":"titulo do T3"
 		}
 	]
 }
