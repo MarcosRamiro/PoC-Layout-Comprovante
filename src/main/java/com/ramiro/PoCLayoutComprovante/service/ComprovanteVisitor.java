@@ -29,14 +29,14 @@ import com.ramiro.poclayoutcomprovante.model.Value;
 public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 	private final String json;
-	private Value resultado;
 	
 	public ComprovanteVisitor(Object object, ComprovParser parser) {
 		
 		if(object == null)
 			throw new IllegalArgumentException("object is null!");
 		
-		String json = new GsonBuilder().setPrettyPrinting().create().toJson(object);
+		//String json = new GsonBuilder().setPrettyPrinting().create().toJson(object);
+		String json = new GsonBuilder().create().toJson(object);
 		this.json = json;
 	}
 	
@@ -61,13 +61,6 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 			return padrao;
 		}
 	}
-	
-	
-	public String getResultado() {
-		return resultado.asString();
-	}
-
-
 
 	@Override
 	public Value visitJson(JsonContext ctx) {
@@ -172,12 +165,6 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 	@Override
 	public Value visitCapitalize(CapitalizeContext ctx) {
 		return new Value(WordUtils.capitalize(this.visit(ctx.expressao()).asString().toLowerCase()));
-	}
-
-	@Override
-	public Value visitPrograma(ProgramaContext ctx) {
-		this.resultado = this.visit(ctx.expressao());
-		return Value.VOID;
 	}
 
 	@Override

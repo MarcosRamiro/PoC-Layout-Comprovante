@@ -11,7 +11,15 @@ public class ComprovanteT3 {
 	private String tipo;
 	private String versao;
 	private List<DetalheComprovanteT3> detalhes;
+	private TemplateForm template;
 
+
+	public TemplateForm getTemplate() {
+		return template;
+	}
+	public void setTemplate(TemplateForm template) {
+		this.template = template;
+	}
 	@JsonGetter("id") 	public String getId() {
 		return id;
 	}

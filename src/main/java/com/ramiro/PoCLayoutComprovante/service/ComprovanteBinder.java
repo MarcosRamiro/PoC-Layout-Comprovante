@@ -1,54 +1,56 @@
 package com.ramiro.poclayoutcomprovante.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ramiro.poclayoutcomprovante.dto.*;
 import com.ramiro.poclayoutcomprovante.form.ComprovanteT3;
-import com.ramiro.poclayoutcomprovante.mapper.ComprovanteMapper;
-import com.ramiro.poclayoutcomprovante.model.Comprovante;
+import com.ramiro.poclayoutcomprovante.form.TemplateForm;
+import com.ramiro.poclayoutcomprovante.dto.TemplateDto;
 
 @Service
 public class ComprovanteBinder {
 
 	@Autowired
 	private ServiceBind serviceBind;
-	@Autowired
-	private ComprovanteMapper comprovanteMapper;
 
-	public ComprovanteDto bind(ComprovanteT3 comprovanteT3, Comprovante comprovante) {
+	public TemplateDto bind(ComprovanteT3 comprovanteT3) {
 
-		ComprovanteDto comprovanteDto = comprovanteMapper.transformar(comprovante);
+		TemplateForm templateForm = comprovanteT3.getTemplate();
 
-		comprovanteDto.setId(comprovanteT3.getId());
+		templateForm.getComponentes().stream()
+				.forEach(componente -> {
+					
+					if (componente.getTitulo() != null && !componente.getTitulo().isEmpty())
+						componente.setTitulo(serviceBind.bind(componente.getTitulo(), comprovanteT3));
+					
+					if (!componente.getTipo().equals("header") && !componente.getTipo().equals("footer")) {
 
-		comprovanteDto.setTitulo(serviceBind.bind(comprovanteDto.getTitulo(), comprovanteT3));
-		comprovanteDto.setId(serviceBind.bind(comprovanteDto.getId(), comprovanteT3));
-		comprovanteDto.setTipo(serviceBind.bind(comprovanteDto.getTipo(), comprovanteT3));
-		comprovanteDto.setVersao(serviceBind.bind(comprovanteDto.getVersao(), comprovanteT3));
+						if (componente.getVisibilidade() != null && !componente.getVisibilidade().isEmpty())
+							componente.setVisibilidade(serviceBind.bind(componente.getVisibilidade(), comprovanteT3));
 
-		comprovanteDto.getGrupos()
-				.stream()
-				.forEach(detalhe -> tratarGrupos(detalhe, comprovanteT3));
+						if (componente.getDados() != null) {
+							componente.getDados().stream().forEach(compAtributo -> {
 
-		return comprovanteDto;
+								if (compAtributo.getRotulo() != null && !compAtributo.getRotulo().isEmpty())
+									compAtributo.setRotulo(serviceBind.bind(compAtributo.getRotulo(), comprovanteT3));
+
+								if (compAtributo.getVisibilidade() != null && !compAtributo.getVisibilidade().isEmpty())
+									compAtributo.setVisibilidade(
+											serviceBind.bind(compAtributo.getVisibilidade(), comprovanteT3));
+
+								if (compAtributo.getConteudo() != null && !compAtributo.getConteudo().isEmpty())
+									compAtributo
+											.setConteudo(serviceBind.bind(compAtributo.getConteudo(), comprovanteT3));
+							});
+						}
+					}
+						
+
+				});
+
+		TemplateDto templateDto = TemplateDto.of(templateForm);
+
+		return templateDto;
 	}
 
-	private void tratarGrupos(GrupoDto grupo, ComprovanteT3 comprovanteT3) {
-
-		grupo.setTitulo(serviceBind.bind(grupo.getTitulo(), comprovanteT3));
-		tratarDetalhesGrupos(grupo.getDetalhesGrupos(), comprovanteT3);
-
-	}
-
-	private void tratarDetalhesGrupos(List<DetalheGrupoDto> detalhes, ComprovanteT3 comprovanteT3) {
-
-		if(detalhes == null) return;
-
-		for (DetalheGrupoDto detalhe : detalhes) {
-			detalhe.tratarAtributos(dado -> serviceBind.bind(dado, comprovanteT3));
-		}
-	}
 }

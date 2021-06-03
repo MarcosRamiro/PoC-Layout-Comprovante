@@ -138,7 +138,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 100,88</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -348,7 +348,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 200,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -558,7 +558,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 300,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -768,7 +768,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 400,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
@@ -978,7 +978,7 @@
           </ResultCollector>
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhesGrupos[0].valorAtributo</stringProp>
+            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 500,42</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>

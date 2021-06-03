@@ -1,20 +1,17 @@
 {
   "template": {
-    "titulo": {
-      "componente": "titulo1",
-      "titulo": "Aqui é o título do Comprovante"
-    },
-    "dadosDaConta": {"componente":"dados-da-conta-defaul"},
-    "rodape": {
-      "componente": "rodape1",
-      "chaveConteudo": "PJ_Empresas"
-    },
     "componentes": [
       {
-        "componente": "comprovante-bloco-default",
-        "titulo": "Aqui vai o titulo do grupo",
+        "tipo": "header",
+        "nome": "header-default",
+        "titulo": "\"Aqui é o título do Comprovante\""
+      },
+      {
+        "nome": "comprovante-bloco-default",
+        "titulo": " capitalize { \"aqui vai $ % _ o titulo do grupo\" } ",
+        "tipo": "conteudo",
         "ordenacao": 0,
-        "visibilidade": true,
+        "visibilidade": "24 == 2",
         "dados": [
           {
             "rotulo": "valor",
@@ -26,15 +23,16 @@
             "rotulo": "data",
             "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"}",
             "visibilidade": true,
-            "ordenacao": 0
+            "ordenacao": 1
           }
         ]
       },
       {
-        "componente": "comprovante-mensagem-default",
-        "titulo": "",
+        "nome": "comprovante-mensagem-default",
+        "titulo": "\"xx\"",
         "ordenacao": 1,
-        "visibilidade": true,
+        "tipo": "conteudo",
+        "visibilidade": " json{\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\"} == \"R$ 100,98\" ? true : false",
         "dados": [
           {
             "rotulo": "",
@@ -44,11 +42,16 @@
           },
           {
             "rotulo": "",
-            "conteudo": "json{$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo}",
+            "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"}",
             "visibilidade": true,
             "ordenacao": 0
           }
         ]
+      },
+      {
+        "tipo": "footer",
+        "nome": "footer-empresas",
+        "titulo": "\"Aqui é o título do Comprovante\""
       }
     ]
   }

@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+
 import org.junit.jupiter.api.Test;
 
 import com.ramiro.poclayoutcomprovante.generated.ComprovLexer;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser;
-import com.ramiro.poclayoutcomprovante.service.ComprovanteVisitor;
 
 public class ComprovanteVisitorTeste {
 	
@@ -22,9 +22,24 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        
+        assertEquals(visitor.visit(tree).asString(), "true");
+        
+	}
+	
+	@Test
+	public void deveCompararESomarJuntosComParentese() {
+
+		ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(" 23 > (11 + 0005) "));
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        ComprovParser parser = new ComprovParser(tokens);
+        ParseTree tree = parser.programa(); // parse
+        
+        ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
+        
+        
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -37,9 +52,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -52,9 +66,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 
@@ -67,9 +80,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -82,9 +94,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -97,9 +108,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -112,9 +122,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -127,9 +136,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -142,9 +150,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -157,9 +164,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -172,9 +178,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -187,9 +192,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -202,9 +206,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -217,9 +220,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -232,9 +234,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -247,9 +248,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -262,9 +262,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -277,9 +276,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -292,9 +290,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -307,9 +304,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -322,9 +318,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -337,9 +332,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -352,9 +346,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "Meu nome é João");
+        assertEquals(visitor.visit(tree).asString(), "Meu nome é João");
         
 	}
 	
@@ -367,9 +360,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "O valor total foi 2.2");
+        assertEquals(visitor.visit(tree).asString(), "O valor total foi 2.2");
         
 	}
 	
@@ -382,9 +374,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "6.98");
+        assertEquals(visitor.visit(tree).asString(), "6.98");
         
 	}
 	
@@ -397,9 +388,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "4.78");
+        assertEquals(visitor.visit(tree).asString(), "4.78");
         
 	}
 	
@@ -412,9 +402,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "Meu nome é João da Silva");
+        assertEquals(visitor.visit(tree).asString(), "Meu nome é João da Silva");
         
 	}
 	
@@ -427,9 +416,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -442,9 +430,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -457,9 +444,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "false");
+        assertEquals(visitor.visit(tree).asString(), "false");
         
 	}
 	
@@ -472,9 +458,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "true");
+        assertEquals(visitor.visit(tree).asString(), "true");
         
 	}
 	
@@ -487,9 +472,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "11");
+        assertEquals(visitor.visit(tree).asString(), "11");
         
 	}
 	
@@ -502,9 +486,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "Meu Nome É Joãozinho");
+        assertEquals(visitor.visit(tree).asString(), "Meu Nome É Joãozinho");
         
 	}
 	
@@ -517,9 +500,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(new Object(), parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "Meu Nome É Joãozinho!!");
+        assertEquals(visitor.visit(tree).asString(), "Meu Nome É Joãozinho!!");
         
 	}
 	
@@ -544,9 +526,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(marcos, parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "jose");
+        assertEquals(visitor.visit(tree).asString(), "jose");
         
 	}
 	
@@ -571,9 +552,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(marcos, parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "Jose");
+        assertEquals(visitor.visit(tree).asString(), "Jose");
         
 	}
 	
@@ -597,9 +577,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa();
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(marcos, parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "verdadeiro");
+        assertEquals(visitor.visit(tree).asString(), "verdadeiro");
         
 	}
 	
@@ -623,9 +602,8 @@ public class ComprovanteVisitorTeste {
         ParseTree tree = parser.programa(); // parse
         
         ComprovanteVisitor visitor = new ComprovanteVisitor(marcos, parser);
-        visitor.visit(tree);
         
-        assertEquals(visitor.getResultado(), "falso");
+        assertEquals(visitor.visit(tree).asString(), "falso");
         
 	}
 }

@@ -13,14 +13,16 @@ import com.ramiro.poclayoutcomprovante.generated.ComprovParser;
 public class ServiceBind {
 
 		public String bind(String padrao, Object object) {
-
+			
+			System.out.println(padrao);
+			
 			ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(padrao));
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
 	        ComprovParser parser = new ComprovParser(tokens);
 	        ParseTree tree = parser.programa();
 	        ComprovanteVisitor visitor = new ComprovanteVisitor(object, parser);
-	        visitor.visit(tree);
 	        
-	        return visitor.getResultado();
+	        return visitor.visit(tree).asString();
+		
 		}
 }
