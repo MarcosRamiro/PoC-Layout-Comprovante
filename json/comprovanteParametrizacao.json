@@ -4,23 +4,23 @@
       {
         "tipo": "header",
         "nome": "header-default",
-        "titulo": "\"Aqui é o título do Comprovante\""
+        "titulo": "capitalize { \"Aqui é o título do Comprovante\" }"
       },
       {
         "nome": "comprovante-bloco-default",
         "titulo": " capitalize { \"aqui vai $ % _ o titulo do grupo\" } ",
         "tipo": "conteudo",
         "ordenacao": 0,
-        "visibilidade": "24 == 2",
+        "visibilidade": true,
         "dados": [
           {
-            "rotulo": "valor",
+            "rotulo": "\"valor\"",
             "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\"}",
             "visibilidade": true,
             "ordenacao": 0
           },
           {
-            "rotulo": "data",
+            "rotulo": "\"data\"",
             "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"}",
             "visibilidade": true,
             "ordenacao": 1
@@ -37,21 +37,21 @@
           {
             "rotulo": "",
             "conteudo": "\"Aqui vai uma mensagem legal para o meu cliente.\"",
-            "visibilidade": true,
+            "visibilidade": " 23 > (11 + 5) ",
             "ordenacao": 0
           },
           {
-            "rotulo": "",
+            "rotulo": "\"Data do Pagamento\"",
             "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"}",
             "visibilidade": true,
-            "ordenacao": 0
+            "ordenacao": 1
           }
         ]
       },
       {
         "tipo": "footer",
         "nome": "footer-empresas",
-        "titulo": "\"Aqui é o título do Comprovante\""
+        "titulo": " capitalize { \"Aqui é o título do Footer\" }"
       }
     ]
   }
