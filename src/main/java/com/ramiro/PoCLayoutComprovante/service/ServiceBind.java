@@ -14,7 +14,7 @@ public class ServiceBind {
 
 		public String bind(String padrao, Object object) {
 			
-			System.out.println(padrao);
+			//System.out.println(padrao);
 			
 			ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(padrao));
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);

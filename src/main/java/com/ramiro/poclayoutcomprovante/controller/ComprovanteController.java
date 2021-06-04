@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ramiro.poclayoutcomprovante.form.ComprovanteT3;
+import com.ramiro.poclayoutcomprovante.form.Form;
 import com.ramiro.poclayoutcomprovante.dto.TemplateDto;
 import com.ramiro.poclayoutcomprovante.service.ComprovanteBinder;
 
@@ -17,10 +17,10 @@ public class ComprovanteController {
 
 	
 	@PostMapping("/detalhe")
-	public ResponseEntity<TemplateDto> obterComprovante(@RequestBody ComprovanteT3 comprovanteT3) {
+	public ResponseEntity<TemplateDto> obterComprovante(@RequestBody Form form) {
 
-		TemplateDto template = comprovanteBinder.bind(comprovanteT3);
-		return ResponseEntity.ok(template);
+		TemplateDto templateDto = comprovanteBinder.bind(form.getComprovante(), form.getTemplate());
+		return ResponseEntity.ok(templateDto);
 
 	}
 

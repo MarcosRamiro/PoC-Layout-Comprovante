@@ -13,11 +13,10 @@ public class ComprovanteBinder {
 	@Autowired
 	private ServiceBind serviceBind;
 
-	public TemplateDto bind(ComprovanteT3 comprovanteT3) {
-
-		TemplateForm templateForm = comprovanteT3.getTemplate();
+	public TemplateDto bind(ComprovanteT3 comprovanteT3, TemplateForm templateForm) {
 
 		templateForm.getComponentes().stream()
+		
 				.forEach(componente -> {
 					
 					if (componente.getTitulo() != null && !componente.getTitulo().isEmpty())
@@ -35,12 +34,10 @@ public class ComprovanteBinder {
 									compAtributo.setRotulo(serviceBind.bind(compAtributo.getRotulo(), comprovanteT3));
 
 								if (compAtributo.getVisibilidade() != null && !compAtributo.getVisibilidade().isEmpty())
-									compAtributo.setVisibilidade(
-											serviceBind.bind(compAtributo.getVisibilidade(), comprovanteT3));
+									compAtributo.setVisibilidade(serviceBind.bind(compAtributo.getVisibilidade(), comprovanteT3));
 
 								if (compAtributo.getConteudo() != null && !compAtributo.getConteudo().isEmpty())
-									compAtributo
-											.setConteudo(serviceBind.bind(compAtributo.getConteudo(), comprovanteT3));
+									compAtributo.setConteudo(serviceBind.bind(compAtributo.getConteudo(), comprovanteT3));
 							});
 						}
 					}

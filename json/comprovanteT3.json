@@ -1,4 +1,5 @@
 {
+"comprovante":{
 	"id":100000000,
 	"titulo":"titulo t3 ramimar",
 	"tipo":"rfb",
@@ -34,4 +35,5 @@
 			"valorAtributo":"titulo do T3"
 		}
 	]
+}
 }
