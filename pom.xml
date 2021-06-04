@@ -65,7 +65,7 @@
 	
 		<resources>
 			<resource>
-				<directory>${basedir}/src/resources/frontend</directory>
+				<directory>${basedir}/src/main/resources/frontend</directory>
 				<excludes>
 					<exclude>**/**</exclude>
 				</excludes>
