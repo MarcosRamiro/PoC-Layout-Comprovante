@@ -1,0 +1,57 @@
+<section>
+
+<h3>{{mensagemCabecalho}}</h3>
+
+<table style="width:70%">
+  <tr>
+    <td>
+      <textarea rows = "15" cols = "65" name = "description" 
+      [(ngModel)]="inputComprovante"
+      ></textarea>
+    </td>
+    
+    <td>
+      <textarea rows = "15" cols = "65" name = "description"
+      [(ngModel)]="inputTemplate"
+      ></textarea>
+    </td>
+
+  </tr>
+
+</table>
+<br>
+<p>
+<button (click)="tratarTemplate()">Clique aqui para processar!!</button>
+<button (click)="limpar()">Limpar!!!</button>
+</p>
+
+<table style="width:30%">
+  <tr>
+    <th>Envio</th>
+    <th>Retorno</th>
+    <th>Tempo</th>
+  </tr>
+  <tr>
+    <td>{{ timestampEnvio | date:'dd.MM.yyyy &nbsp; HH:mm:ss.SSS' }}</td>
+    <td>{{ timestampRetorno | date:'dd.MM.yyyy &nbsp; HH:mm:ss.SSS' }}</td>
+    <td>{{ timestampTempo + 'ms' }}</td>
+
+  </tr>
+</table>
+<br><br><br>
+
+<table style="width:100%">
+  <tr>
+    <th>Original</th>
+    <th>Tratado</th>
+  </tr>
+  <tr>
+    <td><ngx-json-viewer [json]="template"></ngx-json-viewer></td>
+    <td><ngx-json-viewer [json]="templateTratado"></ngx-json-viewer></td>
+
+  </tr>
+
+</table>
+
+
+</section>

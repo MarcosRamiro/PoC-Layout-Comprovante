@@ -1,39 +1,44 @@
 {
-"comprovante":{
-	"id":100000000,
-	"titulo":"titulo t3 ramimar",
-	"tipo":"rfb",
-	"versao":"2",
-	"detalhes":[
-		{
-			"tituloAtributo":"codigo de barras",
-			"valorAtributo":"1234567890"
-			
+	"comprovante": {
+		"id": 100000000,
+		"titulo": "titulo t3 ramimar",
+		"tipo": "rfb",
+		"versao": "2",
+		"cliente": {
+			"nome": "Maria dOS Santos SILVA",
+			"agencia": 1500,
+			"conta": "01109",
+			"dac": 1
 		},
-		{
-			"tituloAtributo":"data do pagamento",
-			"valorAtributo":"30/11/2020"
-		},
-		{
-			"tituloAtributo":"valor do pagamento",
-			"valorAtributo":"R$ 301,45"
-		},
-		{
-			"tituloAtributo":"referência",
-			"valorAtributo":"123-8"
-		},
-		{
-			"tituloAtributo":"versao autenticador",
-			"valorAtributo":"v123.45"
-		},
-		{
-			"tituloAtributo":"mensagem_t3",
-			"valorAtributo":"mensagem do T3"
-		},
-		{
-			"tituloAtributo":"titulo_mensagem_t3",
-			"valorAtributo":"titulo do T3"
-		}
-	]
-}
+		"detalhes": [
+			{
+				"tituloAtributo": "codigo de barras",
+				"valorAtributo": "1234567890"
+			},
+			{
+				"tituloAtributo": "data do pagamento",
+				"valorAtributo": "25/11/2020"
+			},
+			{
+				"tituloAtributo": "valor do pagamento",
+				"valorAtributo": "R$ 200,42"
+			},
+			{
+				"tituloAtributo": "referência",
+				"valorAtributo": "123-8"
+			},
+			{
+				"tituloAtributo": "versao autenticador",
+				"valorAtributo": "v123.45"
+			},
+			{
+				"tituloAtributo": "mensagem_t3",
+				"valorAtributo": "mensagem do T3"
+			},
+			{
+				"tituloAtributo": "titulo_mensagem_t3",
+				"valorAtributo": "titulo do T3"
+			}
+		]
+	}
 }

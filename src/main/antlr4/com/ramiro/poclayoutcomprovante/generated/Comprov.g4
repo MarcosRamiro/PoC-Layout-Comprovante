@@ -33,4 +33,4 @@ fragment FLOAT: DIGITO+ '.' DIGITO*;
 fragment DIGITO: [0-9];
 fragment ESC: '\\"'|'\\\\';
 
-WS: [ \t\n\r ]+ -> skip ;
+WS: [ \t\n\r]+ -> skip ;

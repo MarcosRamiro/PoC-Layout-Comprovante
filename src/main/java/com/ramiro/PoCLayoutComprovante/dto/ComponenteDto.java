@@ -85,7 +85,6 @@ public class ComponenteDto {
 		
 		ComponenteDto componenteDto = new ComponenteDto();
 		componenteDto.setNome(componenteForm.getNome());
-		System.out.println("componenteForm.getOrdenacao() " + componenteForm.getOrdenacao());
 		componenteDto.setOrdenacao(componenteForm.getOrdenacao());
 		componenteDto.setTipo(componenteForm.getTipo());
 		componenteDto.setVisibilidade(componenteForm.getVisibilidade() != null ? componenteForm.getVisibilidade().equals("true") : null);

@@ -20,6 +20,12 @@
             "ordenacao": 0
           },
           {
+            "rotulo": "\"Nome do Cliente\"",
+            "conteudo": " capitalize { json{\"$.cliente.nome \"} }",
+            "visibilidade": true,
+            "ordenacao": 2
+          },
+          {
             "rotulo": "\"data\"",
             "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"}",
             "visibilidade": true,
@@ -32,12 +38,12 @@
         "titulo": "\"xx\"",
         "ordenacao": 1,
         "tipo": "conteudo",
-        "visibilidade": " json{\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\"} == \"R$ 100,98\" ? true : false",
+        "visibilidade": " json{\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\"} == \"R$ 301,45\"",
         "dados": [
           {
             "rotulo": "",
-            "conteudo": "\"Aqui vai uma mensagem legal para o meu cliente.\"",
-            "visibilidade": " 23 > (11 + 5) ",
+            "conteudo": "capitalize{ \"Aqui vai uma mensagem legal para o meu cliente.\" }",
+            "visibilidade": " 25555 > (11 + 5) ",
             "ordenacao": 0
           },
           {

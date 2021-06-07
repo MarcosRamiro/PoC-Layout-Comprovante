@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Form {
 	
-	private ComprovanteT3 comprovante;
+	private Object comprovante;
 	private TemplateForm template;
 	
 	@JsonGetter("comprovante")
-	public ComprovanteT3 getComprovante() {
+	public Object getComprovante() {
 		return comprovante;
 	}
 	@JsonSetter("comprovante")
-	public void setComprovante(ComprovanteT3 comprovante) {
+	public void setComprovante(Object comprovante) {
 		this.comprovante = comprovante;
 	}
 	@JsonGetter("template")

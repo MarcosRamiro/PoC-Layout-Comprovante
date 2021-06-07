@@ -87,7 +87,7 @@
 						<argument>com.ramiro.poclayoutcomprovante.generated</argument>
 					</arguments>
 					<visitor>true</visitor>
-					<listener>true</listener>
+					<listener>false</listener>
 				</configuration>
 				<executions>
 					<execution>

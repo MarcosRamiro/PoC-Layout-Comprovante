@@ -44,7 +44,6 @@ public class ComponenteForm {
 	}
 	@JsonSetter("ordenacao")
 	public void setOrdenacao(Integer ordenacao) {
-		System.out.println("setOrdenacao " + ordenacao);
 		this.ordenacao = ordenacao;
 	}
 	@JsonGetter("visibilidade")

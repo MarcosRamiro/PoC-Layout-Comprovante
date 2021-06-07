@@ -15,7 +15,7 @@ public class ComprovanteController {
 	@Autowired
 	private ComprovanteBinder comprovanteBinder;
 
-	
+	@CrossOrigin(origins = "*")
 	@PostMapping("/detalhe")
 	public ResponseEntity<TemplateDto> obterComprovante(@RequestBody Form form) {
 

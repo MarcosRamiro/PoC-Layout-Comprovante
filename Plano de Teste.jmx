@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.1">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plano de Teste" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -18,217 +18,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Requisição HTTP R$ 100,88" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-		&quot;id&quot;:100000000,&#xd;
-		&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
-		&quot;tipo&quot;:&quot;\&quot;rfb\&quot;&quot;,&#xd;
-		&quot;versao&quot;:&quot;2&quot;,&#xd;
-		&quot;detalhes&quot;:[&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;codigo de barras&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;12345678901234567890&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;data do pagamento&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;30/11/2020&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;valor do pagamento&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;R$ 100,88&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;referencia&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;123-8&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;versao autenticador&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;v123.45&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;mensagem_t3&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;mensagem do T3&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;titulo_mensagem_t3&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;titulo do T3&quot;&#xd;
-			}&#xd;
-		]&#xd;
-	}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">8080</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/comprovante/detalhe</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Gerenciador de Cabeçalhos HTTP" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="Ver Resultados em Tabela" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
-            <stringProp name="EXPECTED_VALUE">R$ 100,88</stringProp>
-            <boolProp name="JSONVALIDATION">true</boolProp>
-            <boolProp name="EXPECT_NULL">false</boolProp>
-            <boolProp name="INVERT">false</boolProp>
-            <boolProp name="ISREGEX">false</boolProp>
-          </JSONPathAssertion>
-          <hashTree/>
-          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Resultados de Asserção" enabled="true">
-            <boolProp name="ResultCollector.error_logging">true</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Relatório de Sumário" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-        </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Grupo de Usuários" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
+        <stringProp name="ThreadGroup.num_threads">5</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -243,41 +33,115 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-		&quot;id&quot;:100000000,&#xd;
-		&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
-		&quot;tipo&quot;:&quot;\&quot;rfb\&quot;&quot;,&#xd;
-		&quot;versao&quot;:&quot;2&quot;,&#xd;
-		&quot;detalhes&quot;:[&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;codigo de barras&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;12345678901234567890&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;data do pagamento&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;30/11/2020&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;valor do pagamento&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;R$ 200,42&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;referencia&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;123-8&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;versao autenticador&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;v123.45&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;mensagem_t3&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;mensagem do T3&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;tituloAtributo&quot;:&quot;titulo_mensagem_t3&quot;,&#xd;
-				&quot;valorAtributo&quot;:&quot;titulo do T3&quot;&#xd;
-			}&#xd;
-		]&#xd;
-	}</stringProp>
+	&#xd;
+&quot;comprovante&quot;:{&#xd;
+	&quot;id&quot;:100000000,&#xd;
+	&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
+	&quot;tipo&quot;:&quot;rfb&quot;,&#xd;
+	&quot;versao&quot;:&quot;2&quot;,&#xd;
+&quot;cliente&quot;: {&#xd;
+&quot;nome&quot;: &quot;MARCOS RAMIRO DOS SANTOS&quot;,&#xd;
+	&quot;agencia&quot;: 1500,&#xd;
+	&quot;conta&quot;: &quot;01109&quot;,&#xd;
+	&quot;dac&quot;:1&#xd;
+},&#xd;
+	&quot;detalhes&quot;:[&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;codigo de barras&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;1234567890&quot;&#xd;
+			&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;data do pagamento&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;25/11/2020&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;valor do pagamento&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;R$ 200,42&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;referência&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;123-8&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;versao autenticador&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;v123.45&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;mensagem_t3&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;mensagem do T3&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;titulo_mensagem_t3&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;titulo do T3&quot;&#xd;
+		}&#xd;
+	]&#xd;
+},&#xd;
+	&#xd;
+	&#xd;
+	&quot;template&quot;: {&#xd;
+    &quot;componentes&quot;: [&#xd;
+      {&#xd;
+        &quot;tipo&quot;: &quot;header&quot;,&#xd;
+        &quot;nome&quot;: &quot;header-default&quot;,&#xd;
+        &quot;titulo&quot;: &quot;capitalize { \&quot;Aqui é o título do Comprovante\&quot; }&quot;&#xd;
+      },&#xd;
+      {&#xd;
+        &quot;nome&quot;: &quot;comprovante-bloco-default&quot;,&#xd;
+        &quot;titulo&quot;: &quot; capitalize { \&quot;aqui vai $ % _ o titulo do grupo\&quot; } &quot;,&#xd;
+        &quot;tipo&quot;: &quot;conteudo&quot;,&#xd;
+        &quot;ordenacao&quot;: 0,&#xd;
+        &quot;visibilidade&quot;: true,&#xd;
+        &quot;dados&quot;: [&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;valor\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;valor do pagamento&apos;)].valorAtributo\&quot;}&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 0&#xd;
+          },&#xd;
+{&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;Nome do Cliente\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot; capitalize { json{\&quot;$.cliente.nome \&quot;} }&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 2&#xd;
+          },&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;data\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;data do pagamento&apos;)].valorAtributo\&quot;}&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 1&#xd;
+          }&#xd;
+        ]&#xd;
+      },&#xd;
+      {&#xd;
+        &quot;nome&quot;: &quot;comprovante-mensagem-default&quot;,&#xd;
+        &quot;titulo&quot;: &quot;\&quot;xx\&quot;&quot;,&#xd;
+        &quot;ordenacao&quot;: 1,&#xd;
+        &quot;tipo&quot;: &quot;conteudo&quot;,&#xd;
+        &quot;visibilidade&quot;: &quot; json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;valor do pagamento&apos;)].valorAtributo\&quot;} == \&quot;R$ 301,45\&quot;&quot;,&#xd;
+        &quot;dados&quot;: [&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;capitalize{ \&quot;Aqui vai uma mensagem legal para o meu cliente.\&quot; }&quot;,&#xd;
+            &quot;visibilidade&quot;: &quot; 25555 &gt; (11 + 5) &quot;,&#xd;
+            &quot;ordenacao&quot;: 0&#xd;
+          },&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;Data do Pagamento\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;data do pagamento&apos;)].valorAtributo\&quot;}&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 1&#xd;
+          }&#xd;
+        ]&#xd;
+      },&#xd;
+      {&#xd;
+        &quot;tipo&quot;: &quot;footer&quot;,&#xd;
+        &quot;nome&quot;: &quot;footer-empresas&quot;,&#xd;
+        &quot;titulo&quot;: &quot; capitalize { \&quot;Aqui é o título do Footer\&quot; }&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}		</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -312,52 +176,6 @@
           <hashTree/>
           <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="Ver Resultados em Tabela" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-            <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
-            <stringProp name="EXPECTED_VALUE">R$ 200,42</stringProp>
-            <boolProp name="JSONVALIDATION">true</boolProp>
-            <boolProp name="EXPECT_NULL">false</boolProp>
-            <boolProp name="INVERT">false</boolProp>
-            <boolProp name="ISREGEX">false</boolProp>
-          </JSONPathAssertion>
-          <hashTree/>
-          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Resultados de Asserção" enabled="true">
-            <boolProp name="ResultCollector.error_logging">true</boolProp>
             <objProp>
               <name>saveConfig</name>
               <value class="SampleSaveConfiguration">
@@ -980,6 +798,291 @@
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
             <stringProp name="JSON_PATH">$.grupos[0].detalhes[0].valorAtributo</stringProp>
             <stringProp name="EXPECTED_VALUE">R$ 500,42</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">false</boolProp>
+          </JSONPathAssertion>
+          <hashTree/>
+          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Resultados de Asserção" enabled="true">
+            <boolProp name="ResultCollector.error_logging">true</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Relatório de Sumário" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Grupo de Usuários" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">2000</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Requisição HTTP R$ 100,88" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">&#xd;
+{&#xd;
+	&#xd;
+&quot;comprovante&quot;:{&#xd;
+	&quot;id&quot;:100000000,&#xd;
+	&quot;titulo&quot;:&quot;titulo t3 ramimar&quot;,&#xd;
+	&quot;tipo&quot;:&quot;rfb&quot;,&#xd;
+	&quot;versao&quot;:&quot;2&quot;,&#xd;
+&quot;cliente&quot;: {&#xd;
+&quot;nome&quot;: &quot;MARCOS RAMIRO DOS SANTOS&quot;,&#xd;
+	&quot;agencia&quot;: 1500,&#xd;
+	&quot;conta&quot;: &quot;01109&quot;,&#xd;
+	&quot;dac&quot;:1&#xd;
+},&#xd;
+	&quot;detalhes&quot;:[&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;codigo de barras&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;1234567890&quot;&#xd;
+			&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;data do pagamento&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;25/11/2020&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;valor do pagamento&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;R$ 301,45&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;referência&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;123-8&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;versao autenticador&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;v123.45&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;mensagem_t3&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;mensagem do T3&quot;&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;tituloAtributo&quot;:&quot;titulo_mensagem_t3&quot;,&#xd;
+			&quot;valorAtributo&quot;:&quot;titulo do T3&quot;&#xd;
+		}&#xd;
+	]&#xd;
+},&#xd;
+	&#xd;
+	&#xd;
+	&quot;template&quot;: {&#xd;
+    &quot;componentes&quot;: [&#xd;
+      {&#xd;
+        &quot;tipo&quot;: &quot;header&quot;,&#xd;
+        &quot;nome&quot;: &quot;header-default&quot;,&#xd;
+        &quot;titulo&quot;: &quot;capitalize { \&quot;Aqui é o título do Comprovante\&quot; }&quot;&#xd;
+      },&#xd;
+      {&#xd;
+        &quot;nome&quot;: &quot;comprovante-bloco-default&quot;,&#xd;
+        &quot;titulo&quot;: &quot; capitalize { \&quot;aqui vai $ % _ o titulo do grupo\&quot; } &quot;,&#xd;
+        &quot;tipo&quot;: &quot;conteudo&quot;,&#xd;
+        &quot;ordenacao&quot;: 0,&#xd;
+        &quot;visibilidade&quot;: true,&#xd;
+        &quot;dados&quot;: [&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;valor\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;valor do pagamento&apos;)].valorAtributo\&quot;}&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 0&#xd;
+          },&#xd;
+{&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;Nome do Cliente\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot; capitalize { json{\&quot;$.cliente.nome \&quot;} }&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 2&#xd;
+          },&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;data\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;data do pagamento&apos;)].valorAtributo\&quot;}&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 1&#xd;
+          }&#xd;
+        ]&#xd;
+      },&#xd;
+      {&#xd;
+        &quot;nome&quot;: &quot;comprovante-mensagem-default&quot;,&#xd;
+        &quot;titulo&quot;: &quot;\&quot;xx\&quot;&quot;,&#xd;
+        &quot;ordenacao&quot;: 1,&#xd;
+        &quot;tipo&quot;: &quot;conteudo&quot;,&#xd;
+        &quot;visibilidade&quot;: &quot; json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;valor do pagamento&apos;)].valorAtributo\&quot;} == \&quot;R$ 301,45\&quot;&quot;,&#xd;
+        &quot;dados&quot;: [&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;capitalize{ \&quot;Aqui vai uma mensagem legal para o meu cliente.\&quot; }&quot;,&#xd;
+            &quot;visibilidade&quot;: &quot; 25555 &gt; (11 + 5) &quot;,&#xd;
+            &quot;ordenacao&quot;: 0&#xd;
+          },&#xd;
+          {&#xd;
+            &quot;rotulo&quot;: &quot;\&quot;Data do Pagamento\&quot;&quot;,&#xd;
+            &quot;conteudo&quot;: &quot;json{\&quot;$.detalhes[?(@.tituloAtributo == &apos;data do pagamento&apos;)].valorAtributo\&quot;}&quot;,&#xd;
+            &quot;visibilidade&quot;: true,&#xd;
+            &quot;ordenacao&quot;: 1&#xd;
+          }&#xd;
+        ]&#xd;
+      },&#xd;
+      {&#xd;
+        &quot;tipo&quot;: &quot;footer&quot;,&#xd;
+        &quot;nome&quot;: &quot;footer-empresas&quot;,&#xd;
+        &quot;titulo&quot;: &quot; capitalize { \&quot;Aqui é o título do Footer\&quot; }&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}		</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/comprovante/detalhe</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Gerenciador de Cabeçalhos HTTP" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="Ver Resultados em Tabela" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+            <stringProp name="JSON_PATH">$..componentes[1].dados[?(@.rotulo == &apos;valor&apos;)].conteudo</stringProp>
+            <stringProp name="EXPECTED_VALUE">R$ 100,88</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
             <boolProp name="INVERT">false</boolProp>

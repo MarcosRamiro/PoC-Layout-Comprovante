@@ -21,7 +21,6 @@ import com.ramiro.poclayoutcomprovante.generated.ComprovParser.JsonContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.NumeroContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.OrExprContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ParentesesContext;
-import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ProgramaContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.RelacionalContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.StringContext;
 import com.ramiro.poclayoutcomprovante.model.Value;
@@ -30,20 +29,20 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 	private final String json;
 	
-	public ComprovanteVisitor(Object object, ComprovParser parser) {
+	public ComprovanteVisitor(Object object) {
 		
 		if(object == null)
 			throw new IllegalArgumentException("object is null!");
-		
-		//String json = new GsonBuilder().setPrettyPrinting().create().toJson(object);
-		String json = new GsonBuilder().create().toJson(object);
-		this.json = json;
+
+		this.json = new GsonBuilder().create().toJson(object);
 	}
 	
 	private String obterValorJson(String padrao) {
 		
+		System.out.println("Entrou json:: " + padrao);
+		
 		if(padrao == null || (!padrao.contains("$")))
-			return "";
+			return padrao;
 		
 		try {
 					
@@ -164,6 +163,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 	@Override
 	public Value visitCapitalize(CapitalizeContext ctx) {
+		System.out.println("Entrou capitalize");
 		return new Value(WordUtils.capitalize(this.visit(ctx.expressao()).asString().toLowerCase()));
 	}
 
@@ -172,7 +172,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		Value resultado = this.visit(ctx.expressao(0));
 
-		if (resultado.asBoolean()) {
+		if (resultado.asBoolean().booleanValue()) {
 			return new Value(this.visit(ctx.expressao(1)));
 		}
 		return new Value(this.visit(ctx.expressao(2)));
