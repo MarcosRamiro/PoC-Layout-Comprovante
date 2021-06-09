@@ -27,6 +27,10 @@ public class Value {
     public boolean isDecimal() {
         return value instanceof BigDecimal;
     }
+    
+    public boolean isBoolean(){
+        return value instanceof Boolean;
+    }
 
     @Override
     public int hashCode() {

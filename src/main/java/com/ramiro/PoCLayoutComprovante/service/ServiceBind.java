@@ -26,16 +26,19 @@ public class ServiceBind {
 	}
 
 	private ResultadoVisitor tratar(String padrao, Object object) {
+		
 		ComprovanteVisitorError error = new ComprovanteVisitorError();
+		ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(padrao));
+		lexer.removeErrorListeners();
+		lexer.addErrorListener(error);
+
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		ComprovParser parser = new ComprovParser(tokens);
+		parser.removeErrorListeners();
+		parser.addErrorListener(error);
 
 		try {
 
-			ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(padrao));
-			lexer.removeErrorListeners();
-			lexer.addErrorListener(error);
-
-			CommonTokenStream tokens = new CommonTokenStream(lexer);
-			ComprovParser parser = new ComprovParser(tokens);
 			ParseTree tree = parser.programa();
 			ComprovanteVisitor visitor = new ComprovanteVisitor(object);
 

@@ -11,12 +11,21 @@ expressao: expressao op=( IGUAL | DIFERENTE ) expressao                         
           | NUMERO                                                                       			#numero
           | 'json' '{' expressao '}'                                                     			#json
           | 'capitalize' '{' expressao '}'                                                 			#capitalize
+          | 'uncapitalize' '{' expressao '}'                                                 		#uncapitalize
+          | 'touppercase' '{' expressao '}'                                                 		#toUpperCase
+          | 'tolowercase' '{' expressao '}'                                                 		#toLowerCase
+          | 'contains' '{' str=expressao ',' sequence=expressao '}'                                 #contains
+          | 'formatcurrency' '{' value=expressao ',' language=expressao ',' country=expressao '}'   #formatCurrency
+          | 'abbreviate' '{' str=expressao ',' lower=expressao ',' upper=expressao '}'              #abbreviate
+          | 'initials' '{' expressao '}'                                                 		    #initials
           | STRING                                                                        		    #string
+          | NULL                                                                        		    #null
           | BOOLEANO                                                                        		#booleano
           | '(' expressao ')'                                                         				#parenteses
           ;
 
 BOOLEANO: ('true' | 'false');
+NULL: 'null';
 STRING: '"' (ESC| .)*? '"';
 NUMERO: (DIGITO+ | FLOAT);
 IGUAL: '==' ;
