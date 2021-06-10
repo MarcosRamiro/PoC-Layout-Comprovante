@@ -9,19 +9,23 @@ expressao: expressao op=( IGUAL | DIFERENTE ) expressao                         
           | expressao OR expressao                                     				                #orExpr
           | expressao MAIS expressao                                     				            #concatenar
           | NUMERO                                                                       			#numero
-          | 'json' '{' expressao '}'                                                     			#json
-          | 'capitalize' '{' expressao '}'                                                 			#capitalize
-          | 'uncapitalize' '{' expressao '}'                                                 		#uncapitalize
-          | 'touppercase' '{' expressao '}'                                                 		#toUpperCase
-          | 'tolowercase' '{' expressao '}'                                                 		#toLowerCase
-          | 'contains' '{' str=expressao ',' sequence=expressao '}'                                 #contains
-          | 'formatcurrency' '{' value=expressao ',' language=expressao ',' country=expressao '}'   #formatCurrency
-          | 'abbreviate' '{' str=expressao ',' lower=expressao ',' upper=expressao '}'              #abbreviate
-          | 'initials' '{' expressao '}'                                                 		    #initials
+          | 'json' '(' expressao ')'                                                     			#json
+          | 'capitalize' '(' expressao ')'                                                 			#capitalize
+          | 'uncapitalize' '(' expressao ')'                                                 		#uncapitalize
+          | 'touppercase' '(' expressao ')'                                                 		#toUpperCase
+          | 'cnpj' '(' expressao ')'                                                 		        #cnpj
+          | 'iscnpj' '(' expressao ')'                                                 		        #isCnpj
+          | 'cpf' '(' expressao ')'                                                 		        #cpf
+          | 'iscpf' '(' expressao ')'                                                 		        #isCpf
+          | 'tolowercase' '(' expressao ')'                                                 		#toLowerCase
+          | 'contains' '(' str=expressao ',' sequence=expressao ')'                                 #contains
+          | 'formatcurrency' '(' value=expressao ',' language=expressao ',' country=expressao ')'   #formatCurrency
+          | 'abbreviate' '(' str=expressao ',' lower=expressao ',' upper=expressao ')'              #abbreviate
+          | 'initials' '(' expressao ')'                                              		        #initials
           | STRING                                                                        		    #string
           | NULL                                                                        		    #null
           | BOOLEANO                                                                        		#booleano
-          | '(' expressao ')'                                                         				#parenteses
+          | '[' expressao ']'                                                         				#colchetes
           ;
 
 BOOLEANO: ('true' | 'false');

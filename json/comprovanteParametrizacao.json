@@ -4,30 +4,30 @@
       {
         "tipo": "header",
         "nome": "header-default",
-        "titulo": "capitalize { \"Aqui é o título do Comprovante\" }"
+        "titulo": " abbreviate( capitalize( json(\"$.titulo\")), 12,20)"
       },
       {
         "nome": "comprovante-bloco-default",
-        "titulo": " capitalize { \"aqui vai $ % _ o titulo do grupo\" } ",
+        "titulo": " touppercase( \"aqui vai $ % _ o titulo do grupo\" ) ",
         "tipo": "conteudo",
         "ordenacao": 0,
         "visibilidade": true,
         "dados": [
           {
             "rotulo": "\"valor\"",
-            "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\"}",
+            "conteudo": "json(\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\")",
             "visibilidade": true,
             "ordenacao": 0
           },
           {
             "rotulo": "\"Nome do Cliente\"",
-            "conteudo": " capitalize { json{\"$.cliente.nome \"} }",
+            "conteudo": " capitalize(json(\"$.cliente.nome \"))",
             "visibilidade": true,
             "ordenacao": 2
           },
           {
             "rotulo": "\"data\"",
-            "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"}",
+            "conteudo": "json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\")",
             "visibilidade": true,
             "ordenacao": 1
           }
@@ -38,17 +38,17 @@
         "titulo": "\"xx\"",
         "ordenacao": 1,
         "tipo": "conteudo",
-        "visibilidade": " json{\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\"} == \"R$ 301,45\"",
+        "visibilidade": " json(\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\") == \"R$ 301,45\"",
         "dados": [
           {
             "rotulo": "",
-            "conteudo": "capitalize{ \"Aqui vai uma mensagem legal para o meu cliente.\" }",
+            "conteudo": "capitalize(\"Aqui vai uma mensagem legal para o meu cliente.\")",
             "visibilidade": " 25555 > (11 + 5) ",
             "ordenacao": 0
           },
           {
             "rotulo": "\"Data do Pagamento\"",
-            "conteudo": "json{\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"}",
+            "conteudo": "json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\")",
             "visibilidade": true,
             "ordenacao": 1
           }
@@ -57,7 +57,7 @@
       {
         "tipo": "footer",
         "nome": "footer-empresas",
-        "titulo": " capitalize { \"Aqui é o título do Footer\" }"
+        "titulo": "touppercase ( \"Aqui é o título do Footer\" )"
       }
     ]
   }

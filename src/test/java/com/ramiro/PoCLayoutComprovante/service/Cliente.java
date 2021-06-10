@@ -3,9 +3,17 @@ package com.ramiro.poclayoutcomprovante.service;
 public class Cliente{
 	private String nome;
 	private String idade;
+	private String cpf;
 	private Cliente cliente;
 	
 	
+	
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 	public Cliente getCliente() {
 		return cliente;
 	}

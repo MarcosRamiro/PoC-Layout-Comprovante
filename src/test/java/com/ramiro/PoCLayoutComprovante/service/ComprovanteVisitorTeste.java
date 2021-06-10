@@ -12,10 +12,13 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ramiro.poclayoutcomprovante.generated.ComprovLexer;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser;
 import com.ramiro.poclayoutcomprovante.model.Value;
+
+import br.com.caelum.stella.tinytype.CPF;
 
 
 public class ComprovanteVisitorTeste {
@@ -24,9 +27,11 @@ public class ComprovanteVisitorTeste {
 		Cliente cliente = new Cliente();
 		cliente.setNome("MARCOS");
 		cliente.setIdade("31");
+		cliente.setCpf("70643401008");
 		Cliente cliente2 = new Cliente();
 		cliente2.setNome("jose");
 		cliente2.setIdade("45");
+		cliente2.setCpf("123");
 		cliente.setCliente(cliente2);
 		return cliente;
 	}
@@ -57,9 +62,9 @@ public class ComprovanteVisitorTeste {
 	}
 
 	@Test
-	public void deveCompararESomarJuntosComParentese() {
+	public void deveCompararESomarJuntosComColchetes() {
 
-		String padrao = " 23 > (11 + 0005)";
+		String padrao = " 23 > [11 + 0005]";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("true", value.asString());
 		assertTrue(value.asBoolean());
@@ -269,7 +274,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveCompararQuandoAsDuasAfirmacaoSaoFalsas_Or() {
 
-		String padrao = " 2 == 1 || 8 == 9 ";
+		String padrao = " [2 == 1 || 8 == 9] ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("false", value.asString());
 		assertFalse(value.asBoolean());
@@ -346,7 +351,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarParenteses_Boolean() {
 
-		String padrao = " ( 1 > 2 || 45 != 45  )  == true ";
+		String padrao = " [ 1 > 2 || 45 != 45 ]  == true ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("false", value.asString());
 		assertFalse(value.asBoolean());
@@ -356,7 +361,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarParentesesVerdadeiro_Boolean() {
 
-		String padrao = " ( 12 > 2 && 45 == 45  )  == true ";
+		String padrao = " [ 12 > 2 && 45 == 45 ]  == true ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("true", value.asString());
 		assertTrue(value.asBoolean());
@@ -366,7 +371,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarParenteses_Numero() {
 
-		String padrao = " ( 4 + 5  )  == 9 ";
+		String padrao = " [ 4 + 5  ]  == 9 ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("true", value.asString());
 		assertTrue(value.asBoolean());
@@ -376,7 +381,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarParenteses_somaNumeros() {
 
-		String padrao = " ( 4 + 5  )  + 2 ";
+		String padrao = " [ 4 + 5  ]  + 2 ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("11", value.asString());
 
@@ -385,7 +390,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveRetornarPrimeirasLetrasEmMaiuscula_Capitalize() {
 
-		String padrao = " capitalize { \"MEU nome é joãozinho\" } ";
+		String padrao = " capitalize ( \"MEU nome é joãozinho\" ) ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("MEU Nome É Joãozinho", value.asString());
 
@@ -394,7 +399,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveRetornarPrimeirasLetrasEmMinuscula_Uncapitalize() {
 
-		String padrao = " uncapitalize { \"MEU nOmE NÃO É jOHnnY\" } ";
+		String padrao = " uncapitalize ( \"MEU nOmE NÃO É jOHnnY\" ) ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("mEU nOmE nÃO é jOHnnY", value.asString());
 
@@ -403,7 +408,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveRetornarConcatenarFuncaoCapitalizeEString_Concatenar() {
 
-		String padrao = " capitalize { \"MEU noMe é joãozinho\" } + \"!!\" ";
+		String padrao = " capitalize ( \"MEU noMe é joãozinho\" ) + \"!!\" ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("MEU NoMe É Joãozinho!!", value.asString());
 
@@ -412,7 +417,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveObterValorAPartirDeJsonPath_Json() {
 		
-		String padrao = " json { \"$.cliente.nome\" } ";
+		String padrao = " json ( \"$.cliente.nome\" ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("jose", value.asString());
 
@@ -421,7 +426,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveCombinarFuncoesJsonECaptalize() {
 		
-		String padrao = " capitalize { json { \"$.cliente.nome\" }  } ";
+		String padrao = " capitalize ( json ( \"$.cliente.nome\" )  ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("Jose", value.asString());
 
@@ -432,7 +437,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarIfVerdadeiro_If() {
 
-		String padrao = " capitalize { json { \"$.cliente.nome\" }  } == \"Jose\" ? \"verdadeiro\" : \"falso\" ";
+		String padrao = " capitalize ( json ( \"$.cliente.nome\" )  ) == \"Jose\" ? \"verdadeiro\" : \"falso\" ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("verdadeiro", value.asString());
 
@@ -441,7 +446,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarIfFalso_If() {
 
-		String padrao = " capitalize { json { \"$.cliente.nome\" }  } == \"Maria\" ? \"verdadeiro\" : \"falso\" ";
+		String padrao = " capitalize ( json ( \"$.cliente.nome\" )  ) == \"Maria\" ? \"verdadeiro\" : \"falso\" ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("falso", value.asString());
 
@@ -450,7 +455,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarStringsParaUpperCase_toUpperCase() {
 
-		String padrao = " touppercase  { \"mEU NOmE NÃO É jOHnnY\" } ";
+		String padrao = " touppercase  ( \"mEU NOmE NÃO É jOHnnY\" ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("MEU NOME NÃO É JOHNNY", value.asString());
 
@@ -459,7 +464,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarStringsParaLowerCase_toLowerCase() {
 
-		String padrao = " tolowercase  { \"mEU NOmE NÃO É jOHnnY\" } ";
+		String padrao = " tolowercase  ( \"mEU NOmE NÃO É jOHnnY\" ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("meu nome não é johnny", value.asString());
 
@@ -468,7 +473,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarStringsParaLowerCaseECapitalize() {
 
-		String padrao = " capitalize {  tolowercase  { \"mEU NOmE NÃO É jOHnnY\" } } ";
+		String padrao = " capitalize (  tolowercase  ( \"mEU NOmE NÃO É jOHnnY\") ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("Meu Nome Não É Johnny", value.asString());
 
@@ -477,7 +482,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveTratarStringsParaLowerCaseECapitalizeEJson() {
 
-		String padrao = " capitalize {  tolowercase  { json { \"$.nome\" } } } + \" Ramiro\" ";
+		String padrao = " capitalize (  tolowercase  ( json ( \"$.nome\" ) ) ) + \" Ramiro\" ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("Marcos Ramiro", value.asString());
 
@@ -486,7 +491,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveObterAsIniciaisDeUmaStringComPonto() {
 
-		String padrao = " initials {  \"Ben J.Lee\" } ";
+		String padrao = " initials (  \"Ben J.Lee\" ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("BJL", value.asString());
 
@@ -495,7 +500,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveObterAsIniciaisDeUmaStringSemPontoMaiusculas() {
 
-		String padrao = " touppercase { initials {  \"Maria da silva Santos\"  } } ";
+		String padrao = " touppercase ( initials (  \"Maria da silva Santos\"  )) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("MDSS", value.asString());
 
@@ -504,7 +509,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveAbreviarTextoGrande() {
 
-		String padrao = " abbreviate {  \"Maria da silva Santos\", 10, 20 } ";
+		String padrao = " abbreviate (  \"Maria da silva Santos\", 10, 20 ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("Maria da silva", value.asString());
 
@@ -513,7 +518,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveGerarErro_FuncaoNaoExiste() {
 
-		String padrao = " capitalize { jsonX { \"$.cliente.nome\" }  } ";
+		String padrao = " capitalize ( jsonX ( \"$.cliente.nome\" )) ";
 		
 		Exception exception = assertThrows(ParseCancellationException.class, () -> {
 			Value value = chamarVisitor(padrao, getCliente());
@@ -526,7 +531,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveGerarErro_PalavraNaoReservadaForaDeExpressao() {
 		
-		String padrao = " capitalize { json XPTO { \"$.cliente.nome\" }  } ";
+		String padrao = " capitalize ( json XPTO ( \"$.cliente.nome\" )) ";
 		
 		Exception exception = assertThrows(ParseCancellationException.class, () -> {
 			Value value = chamarVisitor(padrao, getCliente());
@@ -551,17 +556,16 @@ public class ComprovanteVisitorTeste {
 	
 	@Test
 	public void deveFormatarParaRealBrasileiro() {
-		
-		String padrao = " formatcurrency { 123.12 , \"pt\" , \"br\" } ";
+		String padrao = " formatcurrency ( 123.12 , \"pt\" , \"br\" ) ";
 		Value value = chamarVisitor(padrao, getCliente());
-		assertTrue( "R$ 123,12".equals(value.asString()));
+		assertEquals( "R$ 123,12", value.asString());
 		
 	}
 	
 	@Test
 	public void deveGerarErroAoTentarFormatarTextoParaMoeda() {
 		
-		String padrao = " formatcurrency { \"Maria\" , \"pt\" , \"br\" } ";
+		String padrao = " formatcurrency ( \"Maria\" , \"pt\" , \"br\" ) ";
 
 		Exception exception = assertThrows(RuntimeException.class, () -> {
 			Value value = chamarVisitor(padrao, getCliente());
@@ -569,6 +573,178 @@ public class ComprovanteVisitorTeste {
 		
 		assertEquals("valor deve ser numero/decimal :: " + "Maria", exception.getMessage());
 
+	}
+	
+	@Test
+	public void deveFormatarCPFComPontuacao() {
+		
+		
+		String padrao = " cpf (   \"  674.798.460-96   \" ) ";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("674.798.460-96", value.asString());
+	}
+	
+	@Test
+	public void deveFormatarCPFSemPontuacao() {
+		
+		String padrao = "cpf(\"  67479846096   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("674.798.460-96", value.asString());
+		
+	}
+	
+	@Test
+	public void DeveFormatarCPFInvalidoSemPontuacao() {
+		
+		String padrao = "cpf(\"  12345678912   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("123.456.789-12", value.asString());
+		
+	}
+	
+	@Test
+	public void naoDeveFormatarCPFInvalidoMaiorDoQueOnzeNumeroSemPontuacao() {
+		
+		String padrao = "cpf(\"  12345678912123   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("12345678912123", value.asString());
+		
+	}
+	
+	@Test
+	public void naoDeveFormatarCPFInvalidoMaiorDoQueOnzeNumeroComPontuacao() {
+		
+		String padrao = "cpf(\"  123.4567.9-12123   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("123.4567.9-12123", value.asString());
+		
+	}
+	
+	@Test
+	public void deveIdentificarCpfValidoSemPontuacao() {
+		String padrao = "iscpf(\"  25439329099   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("true", value.asString());
+		assertTrue(value.asBoolean());
+	}
+	
+	@Test
+	public void deveIdentificarCpfValidoComPontuacao() {
+		String padrao = "iscpf(\"  254.393.290-99   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("true", value.asString());
+		assertTrue(value.asBoolean());
+	}
+	
+	@Test
+	public void deveIdentificarCpfValidoComPontuacaoComJson() {
+		String padrao = "iscpf(json( \"$.cpf\")) ? cpf(json(\"$.cpf\")) : false";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(new CPF(getCliente().getCpf()).getNumeroFormatado(), value.asString());
+	}
+	
+	@Test
+	public void deveIdentificarCpfInvalido() {
+		String padrao = "iscpf(\"  09.270.850/0001-84   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("false", value.asString());
+		assertFalse(value.asBoolean());
+	}
+	
+	@Test
+	public void deveIdentificarCpfInvalidoSemPontuacao() {
+		String padrao = "iscpf(\"  12345678900   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("false", value.asString());
+		assertFalse(value.asBoolean());
+	}
+	
+	@Test
+	public void deveFormatarCnpjValidoComPontuacao() {
+		String padrao = "cnpj(\"  09.270.850/0001-84   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("09.270.850/0001-84", value.asString());
+	}
+	
+	@Test
+	public void deveFormatarCnpjValidoSemPontuacao() {
+		String padrao = "cnpj(\"  09270850000184   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("09.270.850/0001-84", value.asString());
+	}
+	
+	@Test
+	public void deveFormatarCnpjInvalidoSemPontuacao() {
+		String padrao = "cnpj(\"  12345678901234   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("12.345.678/9012-34", value.asString());
+	}
+	
+	@Test
+	public void naoDeveFormatarCnpjInvalidoMaiorDoQueQuatorzeNumerosSemPontuacao() {
+		String padrao = "cnpj(\"  123456789012345   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("123456789012345", value.asString());
+	}
+	
+	@Test
+	public void naoDeveFormatarCnpjInvalidoMenorDoQueQuatorzeNumerosSemPontuacao() {
+		String padrao = "cnpj(\"  1234567890123   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("1234567890123", value.asString());
+	}
+	
+	@Test
+	public void deveIdentificarCnpjValidoSemPontuacao() {
+		String padrao = "iscnpj(\"  35290178000107   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("true", value.asString());
+		assertTrue(value.asBoolean());
+	}
+	
+	@Test
+	public void deveIdentificarCnpjValidoComPontuacao() {
+		String padrao = "iscnpj(\"  35.290.178/0001-07   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("true", value.asString());
+		assertTrue(value.asBoolean());
+	}
+	
+	@Test
+	public void deveIdentificarCnpjInvalidoSemPontuacao() {
+		String padrao = "iscnpj(\"  35290178000100   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("false", value.asString());
+		assertFalse(value.asBoolean());
+	}
+	
+	@Test
+	public void deveIdentificarCnpjInvalidoComPontuacao() {
+		String padrao = "iscnpj(\"  35.290.178/0001-00   \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("false", value.asString());
+		assertFalse(value.asBoolean());
+	}
+	
+	@Test
+	public void deveIdentificarCnpjInvalidoComJsonEIf() {
+		String padrao = "iscnpj(json(\"$.cpf\")) ? cnpj(json(\"$.cpf\")) : cpf(json(\"$.cpf\"))";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(new CPF(getCliente().getCpf()).getNumeroFormatado(), value.asString());
+	}
+	
+	@Test
+	public void deveIdentificarCnpjECpfInvalido() {
+		String padrao = "iscnpj(json(\"$.cliente.cpf\")) ? cnpj(json(\"$.cliente.cpf\")) : [iscpf(json(\"$.cliente.cpf\")) ? cpf(json(\"$.cliente.cpf\")) : \"invalido\" ]";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("invalido", value.asString());
+	}
+	
+	@Test
+	public void deveIdentificarCnpjInvalidoECpfValido() {
+		String padrao = "iscnpj(json(\"$.cpf\")) ? cnpj(json(\"$.cpf\")) : [iscpf(json(\"$.cpf\")) ? cpf(json(\"$.cpf\")) : \"invalido\" ]";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(new CPF(getCliente().getCpf()).getNumeroFormatado(), value.asString());
 	}
 	
 	
