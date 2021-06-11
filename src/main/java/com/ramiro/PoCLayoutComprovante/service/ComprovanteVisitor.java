@@ -1,7 +1,14 @@
 package com.ramiro.poclayoutcomprovante.service;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +30,7 @@ import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ComparativoContex
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ConcatenarContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ContainsContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.CpfContext;
+import com.ramiro.poclayoutcomprovante.generated.ComprovParser.DateContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.FormatCurrencyContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.IfContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.InitialsContext;
@@ -51,6 +59,22 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 			throw new IllegalArgumentException("object is null!");
 
 		this.json = new GsonBuilder().create().toJson(object);
+	}
+	
+	private Locale tratarLinguagemEPais(String linguagemEPais) {
+
+		String msgErro = "linguagem e pais deve ter o padrao \"pt-br\".";
+
+		if (!linguagemEPais.contains("-"))
+			throw new RuntimeException(msgErro);
+
+		String[] lang = linguagemEPais.split("-");
+
+		if (!(lang != null && lang.length == 2))
+			throw new RuntimeException(msgErro);
+		
+		return new Locale(lang[0], lang[1]);
+
 	}
 
 	private String obterValorJson(String padrao) {
@@ -107,7 +131,6 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		return new Value(Boolean.valueOf(ctx.getText()));
 	}
 
-	
 	@Override
 	public Value visitColchetes(ColchetesContext ctx) {
 		return this.visit(ctx.expressao());
@@ -234,15 +257,13 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 	public Value visitFormatCurrency(FormatCurrencyContext ctx) {
 
 		Value value = this.visit(ctx.value);
-		if(!value.isDecimal())
+		if (!value.isDecimal())
 			throw new RuntimeException("valor deve ser numero/decimal :: " + value.asString());
-		
-		String language = this.visit(ctx.language).asString();
-		String country = this.visit(ctx.country).asString();
-		
-		Locale locale = new Locale(language, country); 
+
+		Locale locale = tratarLinguagemEPais(this.visit(ctx.lang_country).asString());
+
 		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-		
+
 		return new Value(currencyFormatter.format(value.asDecimal()));
 
 	}
@@ -260,35 +281,60 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		}
 		return this.visit(ctx.expressao(2));
 	}
-	
+
 	@Override
 	public Value visitCpf(CpfContext ctx) {
-		
+
 		Value value = this.visit(ctx.expressao());
-		String tratado = value.asString().replaceAll("\\s+","");
-		return new Value( new CPF(tratado).getNumeroFormatado());
-		
+		String tratado = value.asString().replaceAll("\\s+", "");
+		return new Value(new CPF(tratado).getNumeroFormatado());
+
 	}
-	
+
+	@Override
+	public Value visitDate(DateContext ctx) {
+
+		Value value = this.visit(ctx.value);
+		
+		if (value.isDecimal() || value.isBoolean())
+			throw new RuntimeException("valor deve ser string :: " + value.asString());
+
+		String masc_entrada = this.visit(ctx.masc_e).asString();
+		String masc_saida = this.visit(ctx.masc_s).asString();
+
+		SimpleDateFormat formatadorEntrada = new SimpleDateFormat(masc_entrada, Locale.getDefault());
+		SimpleDateFormat formatadorSaida = new SimpleDateFormat(masc_saida, Locale.getDefault());
+		
+		try {
+			return new Value(formatadorSaida.format(formatadorEntrada.parse(value.asString())));
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("nao foi possivel converter para data", e);
+		}
+		
+
+	}
+
 	@Override
 	public Value visitIsCpf(IsCpfContext ctx) {
 		Value value = this.visit(ctx.expressao());
-		String tratado = value.asString().replaceAll("\\s+","");
+		String tratado = value.asString().replaceAll("\\s+", "");
 		return new Value(Boolean.valueOf(new CPF(tratado).isValido()));
-		
+
 	}
-	
+
 	@Override
 	public Value visitCnpj(CnpjContext ctx) {
 		Value value = this.visit(ctx.expressao());
-		String tratado = value.asString().replaceAll("\\s+","");
+		String tratado = value.asString().replaceAll("\\s+", "");
 		return new Value(new CNPJ(tratado).getNumeroFormatado());
 	}
-	
+
 	@Override
 	public Value visitIsCnpj(IsCnpjContext ctx) {
 		Value value = this.visit(ctx.expressao());
-		String tratado = value.asString().replaceAll("\\s+","");
+		String tratado = value.asString().replaceAll("\\s+", "");
 		return new Value(Boolean.valueOf(new CNPJ(tratado).isValid()));
 	}
 

@@ -27,7 +27,7 @@
           },
           {
             "rotulo": "\"data\"",
-            "conteudo": "json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\")",
+            "conteudo": "date(json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"), \"dd/MM/yyyy\", \"dd-MM-yyyy\"  )",
             "visibilidade": true,
             "ordenacao": 1
           }

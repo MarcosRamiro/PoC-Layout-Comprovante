@@ -14,12 +14,13 @@ expressao: expressao op=( IGUAL | DIFERENTE ) expressao                         
           | 'uncapitalize' '(' expressao ')'                                                 		#uncapitalize
           | 'touppercase' '(' expressao ')'                                                 		#toUpperCase
           | 'cnpj' '(' expressao ')'                                                 		        #cnpj
+          | 'date' '(' value=expressao ',' masc_e=expressao ',' masc_s=expressao  ')'               #date
           | 'iscnpj' '(' expressao ')'                                                 		        #isCnpj
           | 'cpf' '(' expressao ')'                                                 		        #cpf
           | 'iscpf' '(' expressao ')'                                                 		        #isCpf
           | 'tolowercase' '(' expressao ')'                                                 		#toLowerCase
           | 'contains' '(' str=expressao ',' sequence=expressao ')'                                 #contains
-          | 'formatcurrency' '(' value=expressao ',' language=expressao ',' country=expressao ')'   #formatCurrency
+          | 'formatcurrency' '(' value=expressao ',' lang_country=expressao ')'                     #formatCurrency
           | 'abbreviate' '(' str=expressao ',' lower=expressao ',' upper=expressao ')'              #abbreviate
           | 'initials' '(' expressao ')'                                              		        #initials
           | STRING                                                                        		    #string

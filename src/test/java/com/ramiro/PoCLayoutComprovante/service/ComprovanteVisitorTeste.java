@@ -359,7 +359,7 @@ public class ComprovanteVisitorTeste {
 	}
 	
 	@Test
-	public void deveTratarParentesesVerdadeiro_Boolean() {
+	public void deveTratarColchetesVerdadeiro_Boolean() {
 
 		String padrao = " [ 12 > 2 && 45 == 45 ]  == true ";
 		Value value = chamarVisitor(padrao, new Object());
@@ -369,7 +369,7 @@ public class ComprovanteVisitorTeste {
 	}
 
 	@Test
-	public void deveTratarParenteses_Numero() {
+	public void deveTratarColchetes_Numero() {
 
 		String padrao = " [ 4 + 5  ]  == 9 ";
 		Value value = chamarVisitor(padrao, new Object());
@@ -379,7 +379,7 @@ public class ComprovanteVisitorTeste {
 	}
 
 	@Test
-	public void deveTratarParenteses_somaNumeros() {
+	public void deveTratarColchetes_somaNumeros() {
 
 		String padrao = " [ 4 + 5  ]  + 2 ";
 		Value value = chamarVisitor(padrao, new Object());
@@ -556,7 +556,7 @@ public class ComprovanteVisitorTeste {
 	
 	@Test
 	public void deveFormatarParaRealBrasileiro() {
-		String padrao = " formatcurrency ( 123.12 , \"pt\" , \"br\" ) ";
+		String padrao = " formatcurrency ( 123.12 , \"pt-br\" ) ";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals( "R$ 123,12", value.asString());
 		
@@ -565,7 +565,7 @@ public class ComprovanteVisitorTeste {
 	@Test
 	public void deveGerarErroAoTentarFormatarTextoParaMoeda() {
 		
-		String padrao = " formatcurrency ( \"Maria\" , \"pt\" , \"br\" ) ";
+		String padrao = " formatcurrency ( \"Maria\" , \"pt-br\" ) ";
 
 		Exception exception = assertThrows(RuntimeException.class, () -> {
 			Value value = chamarVisitor(padrao, getCliente());
@@ -745,6 +745,75 @@ public class ComprovanteVisitorTeste {
 		String padrao = "iscnpj(json(\"$.cpf\")) ? cnpj(json(\"$.cpf\")) : [iscpf(json(\"$.cpf\")) ? cpf(json(\"$.cpf\")) : \"invalido\" ]";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(new CPF(getCliente().getCpf()).getNumeroFormatado(), value.asString());
+	}
+	
+	@Test
+	public void deveTratarData() {
+		
+		String data = "30-10-2023";
+		String mascara_entrada = "dd-MM-yyyy";
+		String mascara_saida = "ddMMyyyy";
+		String data_esperada = "30102023";
+		
+		
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(data_esperada, value.asString());
+	}
+	
+	@Test
+	public void deveTratarDataComEspaçosNaSaida() {
+		
+		String data = "30-10-2023";
+		String mascara_entrada = "dd-MM-yyyy";
+		String mascara_saida = "dd MM yyyy";
+		String data_esperada = "30 10 2023";
+		
+		
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(data_esperada, value.asString());
+	}
+	
+	@Test
+	public void deveTratarDataComEntradaPadraoAmericano() {
+		
+		String data = "2023-10-20";
+		String mascara_entrada = "yyyy-MM-dd";
+		String mascara_saida = "dd/MM/yyyy";
+		String data_esperada = "20/10/2023";
+		
+		
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(data_esperada, value.asString());
+	}
+	
+	@Test
+	public void deveTratarDataComEntradaPadraoAmericanoSemTraco() {
+		
+		String data = "20231020";
+		String mascara_entrada = "yyyyMMdd";
+		String mascara_saida = "dd/MM/yyyy";
+		String data_esperada = "20/10/2023";
+		
+		
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(data_esperada, value.asString());
+	}
+	
+	@Test
+	public void deveTratarDataComEntradaPadraoAmericanoSemTracoComHora() {
+		
+		String data = "20231020 20:15:15";
+		String mascara_entrada = "yyyyMMdd hh:mm:ss";
+		String mascara_saida = "dd/MM/yyyy";
+		String data_esperada = "20/10/2023";
+
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(data_esperada, value.asString());
 	}
 	
 	
