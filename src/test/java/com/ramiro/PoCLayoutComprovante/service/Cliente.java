@@ -1,13 +1,21 @@
 package com.ramiro.poclayoutcomprovante.service;
 
+import java.math.BigDecimal;
+
 public class Cliente{
 	private String nome;
 	private String idade;
 	private String cpf;
 	private Cliente cliente;
+	private BigDecimal salario;
 	
 	
-	
+	public BigDecimal getSalario() {
+		return salario;
+	}
+	public void setSalario(BigDecimal salario) {
+		this.salario = salario;
+	}
 	public String getCpf() {
 		return cpf;
 	}

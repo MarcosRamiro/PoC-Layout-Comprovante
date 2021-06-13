@@ -1,14 +1,9 @@
 package com.ramiro.poclayoutcomprovante.service;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,6 +37,7 @@ import com.ramiro.poclayoutcomprovante.generated.ComprovParser.OrExprContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.RelacionalContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.StringContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ToLowerCaseContext;
+import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ToNumberContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.ToUpperCaseContext;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser.UncapitalizeContext;
 import com.ramiro.poclayoutcomprovante.model.Value;
@@ -60,7 +56,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		this.json = new GsonBuilder().create().toJson(object);
 	}
-	
+
 	private Locale tratarLinguagemEPais(String linguagemEPais) {
 
 		String msgErro = "linguagem e pais deve ter o padrao \"pt-br\".";
@@ -72,7 +68,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		if (!(lang != null && lang.length == 2))
 			throw new RuntimeException(msgErro);
-		
+
 		return new Locale(lang[0], lang[1]);
 
 	}
@@ -145,7 +141,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		case ComprovParser.IGUAL:
 			return left.isDecimal() && right.isDecimal()
 					? new Value(Boolean.valueOf(left.asDecimal().compareTo(right.asDecimal()) == 0))
-					: new Value(Boolean.valueOf(left.equals(right)));
+					: new Value(Boolean.valueOf(left.asString().equals(right.asString())));
 
 		case ComprovParser.DIFERENTE:
 			return left.isDecimal() && right.isDecimal()
@@ -295,7 +291,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 	public Value visitDate(DateContext ctx) {
 
 		Value value = this.visit(ctx.value);
-		
+
 		if (value.isDecimal() || value.isBoolean())
 			throw new RuntimeException("valor deve ser string :: " + value.asString());
 
@@ -304,15 +300,14 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		SimpleDateFormat formatadorEntrada = new SimpleDateFormat(masc_entrada, Locale.getDefault());
 		SimpleDateFormat formatadorSaida = new SimpleDateFormat(masc_saida, Locale.getDefault());
-		
+
 		try {
 			return new Value(formatadorSaida.format(formatadorEntrada.parse(value.asString())));
-			
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException("nao foi possivel converter para data", e);
 		}
-		
 
 	}
 
@@ -336,6 +331,25 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		Value value = this.visit(ctx.expressao());
 		String tratado = value.asString().replaceAll("\\s+", "");
 		return new Value(Boolean.valueOf(new CNPJ(tratado).isValid()));
+	}
+
+	@Override
+	public Value visitToNumber(ToNumberContext ctx) {
+
+		Value value = this.visit(ctx.expressao());
+		
+		if(value.isDecimal())
+			return  value;
+		
+		String tratado = value.asString().replaceAll("\\s+", "");
+
+		try {
+			BigDecimal number = new BigDecimal(tratado);
+			return new Value(number);
+		} catch (NumberFormatException e) {
+			throw new RuntimeException("Não é possível converter o valor para Numero :: " + value.asString());
+		}
+
 	}
 
 }

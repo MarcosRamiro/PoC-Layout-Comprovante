@@ -19,6 +19,7 @@ expressao: expressao op=( IGUAL | DIFERENTE ) expressao                         
           | 'cpf' '(' expressao ')'                                                 		        #cpf
           | 'iscpf' '(' expressao ')'                                                 		        #isCpf
           | 'tolowercase' '(' expressao ')'                                                 		#toLowerCase
+          | 'tonumber' '(' expressao ')'                                                 		    #toNumber
           | 'contains' '(' str=expressao ',' sequence=expressao ')'                                 #contains
           | 'formatcurrency' '(' value=expressao ',' lang_country=expressao ')'                     #formatCurrency
           | 'abbreviate' '(' str=expressao ',' lower=expressao ',' upper=expressao ')'              #abbreviate

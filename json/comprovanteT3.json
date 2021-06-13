@@ -1,11 +1,11 @@
 {
 	"comprovante": {
 		"id": 100000000,
-		"titulo": "titulo t3 ramimar Mas é um Titulo Grande",
+		"titulo": "titulo do meu comprovante muito importante para mim",
 		"tipo": "rfb",
 		"versao": "2",
 		"cliente": {
-			"nome": "Maria dOS Santos SILVA",
+			"nome": "MARCOS RAMIRO DOS SANTOS",
 			"agencia": 1500,
 			"conta": "01109",
 			"dac": 1
@@ -21,10 +21,10 @@
 			},
 			{
 				"tituloAtributo": "valor do pagamento",
-				"valorAtributo": "R$ 200,42"
+				"valorAtributo": "200.42"
 			},
 			{
-				"tituloAtributo": "referÃªncia",
+				"tituloAtributo": "referência",
 				"valorAtributo": "123-8"
 			},
 			{

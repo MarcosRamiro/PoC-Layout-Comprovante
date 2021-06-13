@@ -1,64 +1,64 @@
 {
-  "template": {
-    "componentes": [
-      {
-        "tipo": "header",
-        "nome": "header-default",
-        "titulo": " abbreviate( capitalize( json(\"$.titulo\")), 12,20)"
-      },
-      {
-        "nome": "comprovante-bloco-default",
-        "titulo": " touppercase( \"aqui vai $ % _ o titulo do grupo\" ) ",
-        "tipo": "conteudo",
-        "ordenacao": 0,
-        "visibilidade": true,
-        "dados": [
-          {
-            "rotulo": "\"valor\"",
-            "conteudo": "json(\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\")",
-            "visibilidade": true,
-            "ordenacao": 0
-          },
-          {
-            "rotulo": "\"Nome do Cliente\"",
-            "conteudo": " capitalize(json(\"$.cliente.nome \"))",
-            "visibilidade": true,
-            "ordenacao": 2
-          },
-          {
-            "rotulo": "\"data\"",
-            "conteudo": "date(json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"), \"dd/MM/yyyy\", \"dd-MM-yyyy\"  )",
-            "visibilidade": true,
-            "ordenacao": 1
-          }
-        ]
-      },
-      {
-        "nome": "comprovante-mensagem-default",
-        "titulo": "\"xx\"",
-        "ordenacao": 1,
-        "tipo": "conteudo",
-        "visibilidade": " json(\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\") == \"R$ 301,45\"",
-        "dados": [
-          {
-            "rotulo": "",
-            "conteudo": "capitalize(\"Aqui vai uma mensagem legal para o meu cliente.\")",
-            "visibilidade": " 25555 > (11 + 5) ",
-            "ordenacao": 0
-          },
-          {
-            "rotulo": "\"Data do Pagamento\"",
-            "conteudo": "json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\")",
-            "visibilidade": true,
-            "ordenacao": 1
-          }
-        ]
-      },
-      {
-        "tipo": "footer",
-        "nome": "footer-empresas",
-        "titulo": "touppercase ( \"Aqui é o título do Footer\" )"
-      }
-    ]
-  }
+	"template": {
+		"componentes": [
+			{
+				"tipo": "header",
+				"nome": "header-default",
+				"titulo": " abbreviate( capitalize( json(\"$.titulo\")), 15,25)"
+			},
+			{
+				"nome": "comprovante-bloco-default",
+				"titulo": " touppercase( \"aqui vai $ % _ o titulo do grupo\" ) ",
+				"tipo": "conteudo",
+				"ordenacao": 0,
+				"visibilidade": true,
+				"dados": [
+					{
+						"rotulo": "\"valor\"",
+						"conteudo": "formatcurrency(tonumber(json(\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\")), \"pt-br\" )",
+						"visibilidade": true,
+						"ordenacao": 0
+					},
+					{
+						"rotulo": "\"Nome do Cliente\"",
+						"conteudo": " capitalize ( tolowercase(json(\"$.cliente.nome \")) )",
+						"visibilidade": true,
+						"ordenacao": 2
+					},
+					{
+						"rotulo": "\"data\"",
+						"conteudo": "date(json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"), \"dd/MM/yyyy\", \"dd-MM-yyyy\")",
+						"visibilidade": true,
+						"ordenacao": 1
+					}
+				]
+			},
+			{
+				"nome": "comprovante-mensagem-default",
+				"titulo": "\"xx\"",
+				"ordenacao": 1,
+				"tipo": "conteudo",
+				"visibilidade": " tonumber(json(\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\")) == 200.42",
+				"dados": [
+					{
+						"rotulo": "",
+						"conteudo": "capitalize(\"Aqui vai uma mensagem legal para o meu cliente.\")",
+						"visibilidade": " 25555 > [11 + 5] ",
+						"ordenacao": 0
+					},
+					{
+						"rotulo": "\"Data do Pagamento\"",
+						"conteudo": "json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\")",
+						"visibilidade": true,
+						"ordenacao": 1
+					}
+				]
+			},
+			{
+				"tipo": "footer",
+				"nome": "footer-empresas",
+				"titulo": "tolowercase ( \"Aqui vai o titulo do Footer\" )"
+			}
+		]
+	}
 }

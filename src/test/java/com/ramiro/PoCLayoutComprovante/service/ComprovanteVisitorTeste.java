@@ -28,6 +28,7 @@ public class ComprovanteVisitorTeste {
 		cliente.setNome("MARCOS");
 		cliente.setIdade("31");
 		cliente.setCpf("70643401008");
+		cliente.setSalario(new BigDecimal("2000.50"));
 		Cliente cliente2 = new Cliente();
 		cliente2.setNome("jose");
 		cliente2.setIdade("45");
@@ -56,6 +57,16 @@ public class ComprovanteVisitorTeste {
 		
 		String padrao = " 22 == 22 ";
 		Value value = chamarVisitor(padrao, new Object());
+		assertEquals("true", value.asString());
+		assertTrue(value.asBoolean());
+
+	}
+	
+	@Test
+	public void deveCompararDoisInteriosIguaisResultadoDaFuncaotoNumber() {
+		
+		String padrao = " tonumber(json(\"$.salario\")) == 2000.50 ";
+		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals("true", value.asString());
 		assertTrue(value.asBoolean());
 
@@ -759,6 +770,39 @@ public class ComprovanteVisitorTeste {
 		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(data_esperada, value.asString());
+	}
+	
+	@Test
+	public void deveConverterParaNumeroDecimal() {
+		
+		String data = "200.42";
+		String padrao = "tonumber(\" " + data +" \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(data, value.asString());
+		assertTrue(new BigDecimal(value.asString()).equals(value.asDecimal()));
+	}
+	
+	@Test
+	public void deveConverterParaNumeroSemDecimal() {
+		
+		String data = "200";
+		String padrao = "tonumber(\" " + data +" \")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals(data, value.asString());
+		assertTrue(new BigDecimal(value.asString()).equals(value.asDecimal()));
+	}
+	
+	@Test
+	public void deveRetornarExceptionQuandoTentarConverterStringNumero() {
+		
+		String data = "200k";
+		String padrao = "tonumber(\"" + data +"\")";
+
+		Exception exception = assertThrows(RuntimeException.class, () -> {
+			Value value = chamarVisitor(padrao, getCliente());
+		});
+		
+		assertEquals("Não é possível converter o valor para Numero :: 200k", exception.getMessage());
 	}
 	
 	@Test
