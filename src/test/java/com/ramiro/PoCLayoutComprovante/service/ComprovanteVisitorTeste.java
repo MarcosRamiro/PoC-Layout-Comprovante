@@ -538,6 +538,17 @@ public class ComprovanteVisitorTeste {
 		assertTrue(exception.getMessage().contains("token recognition error"));
 		
 	}
+	
+	@Test
+	public void deveTratarFuncaoDentroDeUmaStringComoString() {
+
+		String padrao = " \" capitalize ( json(200.00) ) \" ";
+		
+		Value value = chamarVisitor(padrao, getCliente());
+		
+		assertEquals(" capitalize ( json(200.00) ) ", value.asString());
+		
+	}
 
 	@Test
 	public void deveGerarErro_PalavraNaoReservadaForaDeExpressao() {
@@ -552,6 +563,26 @@ public class ComprovanteVisitorTeste {
 
 	}
 	
+	@Test
+	public void deveValidarSeTextoContemConteudo() {
+		
+		String padrao = "contains(json( \"$.cliente.nome\"), \"e\") ";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("true", value.asString());
+		assertTrue(value.asBoolean());
+
+	}
+	
+	@Test
+	public void deveValidarQueTextoNaoContemConteudo() {
+		
+		String padrao = "contains(json( \"$.cliente.nome\"), \"w\") ";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("false", value.asString());
+		assertFalse(value.asBoolean());
+
+	}
+		
 	@Test
 	public void deveGerarErro_IfNaoTemBoolean() {
 		
@@ -767,7 +798,7 @@ public class ComprovanteVisitorTeste {
 		String data_esperada = "30102023";
 		
 		
-		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"pt-br\")";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(data_esperada, value.asString());
 	}
@@ -806,7 +837,7 @@ public class ComprovanteVisitorTeste {
 	}
 	
 	@Test
-	public void deveTratarDataComEspaçosNaSaida() {
+	public void deveTratarDataComEspacosNaSaida() {
 		
 		String data = "30-10-2023";
 		String mascara_entrada = "dd-MM-yyyy";
@@ -814,7 +845,7 @@ public class ComprovanteVisitorTeste {
 		String data_esperada = "30 10 2023";
 		
 		
-		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"pt-br\" )";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(data_esperada, value.asString());
 	}
@@ -828,7 +859,7 @@ public class ComprovanteVisitorTeste {
 		String data_esperada = "20/10/2023";
 		
 		
-		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" , \"pt-br\" )";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(data_esperada, value.asString());
 	}
@@ -841,8 +872,7 @@ public class ComprovanteVisitorTeste {
 		String mascara_saida = "dd/MM/yyyy";
 		String data_esperada = "20/10/2023";
 		
-		
-		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"pt-br\" )";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(data_esperada, value.asString());
 	}
@@ -852,14 +882,13 @@ public class ComprovanteVisitorTeste {
 		
 		String data = "20231020 20:15:15";
 		String mascara_entrada = "yyyyMMdd hh:mm:ss";
-		String mascara_saida = "dd/MM/yyyy";
-		String data_esperada = "20/10/2023";
+		String mascara_saida = "dd/MM/yyyy hh:mm";
+		String data_esperada = "20/10/2023 20:15";
 
-		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\" )";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"pt-br\" )";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(data_esperada, value.asString());
 	}
-	
-	
+		
 
 }

@@ -4,7 +4,7 @@ programa: expressao;
 
 expressao: expressao op=( IGUAL | DIFERENTE ) expressao                                             #comparativo
  		  | expressao op=( MAIORIGUAL | MENORIGUAL | DIFERENTE | MAIOR | MENOR ) expressao          #relacional
-          | expressao '?' expressao ':' expressao                                     				#if
+          | teste=expressao '?' verdadeiro=expressao ':' falso=expressao                            #if
           | expressao AND expressao                                     	            			#andExpr
           | expressao OR expressao                                     				                #orExpr
           | expressao MAIS expressao                                     				            #concatenar
@@ -14,7 +14,7 @@ expressao: expressao op=( IGUAL | DIFERENTE ) expressao                         
           | 'uncapitalize' '(' expressao ')'                                                 		#uncapitalize
           | 'touppercase' '(' expressao ')'                                                 		#toUpperCase
           | 'cnpj' '(' expressao ')'                                                 		        #cnpj
-          | 'date' '(' value=expressao ',' masc_e=expressao ',' masc_s=expressao  ')'               #date
+          | 'date' '(' value=expressao ',' masc_e=expressao ',' masc_s=expressao ',' lang_country=expressao  ')'    #date
           | 'iscnpj' '(' expressao ')'                                                 		        #isCnpj
           | 'cpf' '(' expressao ')'                                                 		        #cpf
           | 'iscpf' '(' expressao ')'                                                 		        #isCpf

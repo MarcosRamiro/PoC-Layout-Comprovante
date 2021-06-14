@@ -245,7 +245,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		String texto = this.visit(ctx.str).asString();
 		String sequence = this.visit(ctx.sequence).asString();
 
-		return new Value(Boolean.valueOf(texto.contains(sequence)));
+		return new Value(Boolean.valueOf(texto.toLowerCase().contains(sequence.toLowerCase())));
 
 	}
 
@@ -267,15 +267,15 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 	@Override
 	public Value visitIf(IfContext ctx) {
 
-		Value resultado = this.visit(ctx.expressao(0));
+		Value resultado = this.visit(ctx.teste);
 
 		if (!resultado.isBoolean())
 			throw new RuntimeException("expressao deve retornar um boolean :: " + resultado.asString());
 
 		if (resultado.asBoolean().booleanValue()) {
-			return this.visit(ctx.expressao(1));
+			return this.visit(ctx.verdadeiro);
 		}
-		return this.visit(ctx.expressao(2));
+		return this.visit(ctx.falso);
 	}
 
 	@Override
@@ -297,15 +297,15 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		String masc_entrada = this.visit(ctx.masc_e).asString();
 		String masc_saida = this.visit(ctx.masc_s).asString();
-
-		SimpleDateFormat formatadorEntrada = new SimpleDateFormat(masc_entrada, Locale.getDefault());
-		SimpleDateFormat formatadorSaida = new SimpleDateFormat(masc_saida, Locale.getDefault());
+		Locale locale = tratarLinguagemEPais(this.visit(ctx.lang_country).asString());
+		//System.out.println(locale.toString());
+		SimpleDateFormat formatadorEntrada = new SimpleDateFormat(masc_entrada, locale);
+		SimpleDateFormat formatadorSaida = new SimpleDateFormat(masc_saida, locale);
 
 		try {
 			return new Value(formatadorSaida.format(formatadorEntrada.parse(value.asString())));
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			throw new RuntimeException("nao foi possivel converter para data", e);
 		}
 
