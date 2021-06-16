@@ -2,7 +2,8 @@ grammar Comprov;
 
 programa: expressao;
 
-expressao: expressao op=( IGUAL | DIFERENTE ) expressao                                             #comparativo
+expressao : 
+           expressao op=( IGUAL | DIFERENTE ) expressao                                             #comparativo
  		  | expressao op=( MAIORIGUAL | MENORIGUAL | DIFERENTE | MAIOR | MENOR ) expressao          #relacional
           | teste=expressao '?' verdadeiro=expressao ':' falso=expressao                            #if
           | expressao AND expressao                                     	            			#andExpr
@@ -29,6 +30,7 @@ expressao: expressao op=( IGUAL | DIFERENTE ) expressao                         
           | BOOLEANO                                                                        		#booleano
           | '[' expressao ']'                                                         				#colchetes
           ;
+          
 
 BOOLEANO: ('true' | 'false');
 NULL: 'null';

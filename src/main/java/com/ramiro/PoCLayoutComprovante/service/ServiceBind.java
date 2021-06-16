@@ -8,26 +8,25 @@ import org.springframework.stereotype.Service;
 
 import com.ramiro.poclayoutcomprovante.generated.ComprovLexer;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser;
-import com.ramiro.poclayoutcomprovante.model.ResultadoVisitor;
+import com.ramiro.poclayoutcomprovante.service.visitor.ComprovanteVisitor;
+import com.ramiro.poclayoutcomprovante.service.visitor.ComprovanteVisitorErrorListener;
 
 @Service
 public class ServiceBind {
 
-	public String bind(String padrao, Object object) {
+	public String bind(String padrao, Object object) throws ServiceBindException {
 
-		ResultadoVisitor resultado = this.tratar(padrao, object);
-
-		if (resultado.Sucesso()) {
-			return resultado.getResultado();
+		try {
+			return this.tratar(padrao, object);
+		} catch (ParseCancellationException e) {
+			throw new ServiceBindException("Erro ao tentar tratar o tratar o padrao: " + padrao, e);
 		}
-
-		return padrao;
 
 	}
 
-	private ResultadoVisitor tratar(String padrao, Object object) {
-		
-		ComprovanteVisitorError error = new ComprovanteVisitorError();
+	private String tratar(String padrao, Object object) {
+
+		ComprovanteVisitorErrorListener error = new ComprovanteVisitorErrorListener();
 		ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(padrao));
 		lexer.removeErrorListeners();
 		lexer.addErrorListener(error);
@@ -37,19 +36,10 @@ public class ServiceBind {
 		parser.removeErrorListeners();
 		parser.addErrorListener(error);
 
-		try {
+		ParseTree tree = parser.programa();
+		ComprovanteVisitor visitor = new ComprovanteVisitor(object);
 
-			ParseTree tree = parser.programa();
-			ComprovanteVisitor visitor = new ComprovanteVisitor(object);
+		return visitor.visit(tree).asString();
 
-			String retorno = visitor.visit(tree).asString();
-
-			return ResultadoVisitor.comStatus(true).comResultado(retorno);
-
-		} catch (ParseCancellationException e) {
-
-			return ResultadoVisitor.comStatus(false).comMensagemDeErro(e.getMessage());
-
-		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.ramiro.poclayoutcomprovante.service;
+package com.ramiro.poclayoutcomprovante.service.visitor;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.apache.commons.text.WordUtils;
 
 import com.google.gson.GsonBuilder;
@@ -52,7 +53,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 	public ComprovanteVisitor(Object object) {
 
 		if (object == null)
-			throw new IllegalArgumentException("object is null!");
+			throw new  ParseCancellationException("object is null!");
 
 		this.json = new GsonBuilder().create().toJson(object);
 	}
@@ -62,12 +63,12 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		String msgErro = "linguagem e pais deve ter o padrao \"pt-br\".";
 
 		if (!linguagemEPais.contains("-"))
-			throw new RuntimeException(msgErro);
+			throw new ParseCancellationException(msgErro);
 
 		String[] lang = linguagemEPais.split("-");
 
 		if (!(lang != null && lang.length == 2))
-			throw new RuntimeException(msgErro);
+			throw new ParseCancellationException(msgErro);
 
 		return new Locale(lang[0], lang[1]);
 
@@ -149,7 +150,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 					: new Value(Boolean.valueOf(!left.equals(right)));
 
 		default:
-			throw new RuntimeException("operador desconhecido: " + ctx.op.getText());
+			throw new ParseCancellationException("operador desconhecido: " + ctx.op.getText());
 		}
 	}
 
@@ -175,7 +176,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 			return new Value(Boolean.valueOf(left.asDecimal().compareTo(right.asDecimal()) <= 0));
 
 		default:
-			throw new RuntimeException("operador desconhecido: " + ctx.op.getText());
+			throw new ParseCancellationException("operador desconhecido: " + ctx.op.getText());
 		}
 
 	}
@@ -254,7 +255,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		Value value = this.visit(ctx.value);
 		if (!value.isDecimal())
-			throw new RuntimeException("valor deve ser numero/decimal :: " + value.asString());
+			throw new ParseCancellationException("valor deve ser numero/decimal :: " + value.asString());
 
 		Locale locale = tratarLinguagemEPais(this.visit(ctx.lang_country).asString());
 
@@ -270,7 +271,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		Value resultado = this.visit(ctx.teste);
 
 		if (!resultado.isBoolean())
-			throw new RuntimeException("expressao deve retornar um boolean :: " + resultado.asString());
+			throw new ParseCancellationException("expressao deve retornar um boolean :: " + resultado.asString());
 
 		if (resultado.asBoolean().booleanValue()) {
 			return this.visit(ctx.verdadeiro);
@@ -293,12 +294,11 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 		Value value = this.visit(ctx.value);
 
 		if (value.isDecimal() || value.isBoolean())
-			throw new RuntimeException("valor deve ser string :: " + value.asString());
+			throw new ParseCancellationException("valor deve ser string :: " + value.asString());
 
 		String masc_entrada = this.visit(ctx.masc_e).asString();
 		String masc_saida = this.visit(ctx.masc_s).asString();
 		Locale locale = tratarLinguagemEPais(this.visit(ctx.lang_country).asString());
-		//System.out.println(locale.toString());
 		SimpleDateFormat formatadorEntrada = new SimpleDateFormat(masc_entrada, locale);
 		SimpleDateFormat formatadorSaida = new SimpleDateFormat(masc_saida, locale);
 
@@ -306,7 +306,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 			return new Value(formatadorSaida.format(formatadorEntrada.parse(value.asString())));
 
 		} catch (ParseException e) {
-			throw new RuntimeException("nao foi possivel converter para data", e);
+			throw new ParseCancellationException("nao foi possivel converter para data :: " + value.asString(), e);
 		}
 
 	}
@@ -347,7 +347,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 			BigDecimal number = new BigDecimal(tratado);
 			return new Value(number);
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Não é possível converter o valor para Numero :: " + value.asString());
+			throw new ParseCancellationException("Não é possível converter o valor para Numero :: " + value.asString(), e);
 		}
 
 	}

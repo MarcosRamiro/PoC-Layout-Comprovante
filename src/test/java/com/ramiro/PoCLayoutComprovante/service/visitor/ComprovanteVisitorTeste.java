@@ -1,4 +1,4 @@
-package com.ramiro.poclayoutcomprovante.service;
+package com.ramiro.poclayoutcomprovante.service.visitor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -6,20 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ramiro.poclayoutcomprovante.generated.ComprovLexer;
 import com.ramiro.poclayoutcomprovante.generated.ComprovParser;
 import com.ramiro.poclayoutcomprovante.model.Value;
 
 import br.com.caelum.stella.tinytype.CPF;
-
 
 public class ComprovanteVisitorTeste {
 	
@@ -40,7 +39,7 @@ public class ComprovanteVisitorTeste {
 	private static Value chamarVisitor(String padrao, Object object) {
 		
 		ComprovLexer lexer = new ComprovLexer(CharStreams.fromString(padrao));
-		ComprovanteVisitorError error = new ComprovanteVisitorError();
+		ComprovanteVisitorErrorListener error = new ComprovanteVisitorErrorListener();
 		lexer.removeErrorListeners();
 		lexer.addErrorListener(error);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -71,6 +70,18 @@ public class ComprovanteVisitorTeste {
 		assertTrue(value.asBoolean());
 
 	}
+	
+	@Test
+	public void deveconverterNumeroParaNumero_toNumber() {
+		
+		String padrao = " tonumber( 2000.50 ) ";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("2000.50", value.asString());
+		assertTrue(value.isDecimal());
+
+	}
+	
+	
 
 	@Test
 	public void deveCompararESomarJuntosComColchetes() {
@@ -588,7 +599,7 @@ public class ComprovanteVisitorTeste {
 		
 		String padrao = " \"Maria da Silva\" ? true : false ";
 		
-		Exception exception = assertThrows(RuntimeException.class, () -> {
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
 			Value value = chamarVisitor(padrao, getCliente());
 		});
 		
@@ -609,7 +620,7 @@ public class ComprovanteVisitorTeste {
 		
 		String padrao = " formatcurrency ( \"Maria\" , \"pt-br\" ) ";
 
-		Exception exception = assertThrows(RuntimeException.class, () -> {
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
 			Value value = chamarVisitor(padrao, getCliente());
 		});
 		
@@ -776,6 +787,13 @@ public class ComprovanteVisitorTeste {
 	}
 	
 	@Test
+	public void deveRetornarMesmoConteudoQuandoJsonNaoTiverCifrao() {
+		String padrao = "json(\"Meu nome é João\")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("Meu nome é João", value.asString());
+	}
+	
+	@Test
 	public void deveIdentificarCnpjECpfInvalido() {
 		String padrao = "iscnpj(json(\"$.cliente.cpf\")) ? cnpj(json(\"$.cliente.cpf\")) : [iscpf(json(\"$.cliente.cpf\")) ? cpf(json(\"$.cliente.cpf\")) : \"invalido\" ]";
 		Value value = chamarVisitor(padrao, getCliente());
@@ -829,7 +847,7 @@ public class ComprovanteVisitorTeste {
 		String data = "200k";
 		String padrao = "tonumber(\"" + data +"\")";
 
-		Exception exception = assertThrows(RuntimeException.class, () -> {
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
 			Value value = chamarVisitor(padrao, getCliente());
 		});
 		
@@ -881,14 +899,69 @@ public class ComprovanteVisitorTeste {
 	public void deveTratarDataComEntradaPadraoAmericanoSemTracoComHora() {
 		
 		String data = "20231020 20:15:15";
-		String mascara_entrada = "yyyyMMdd hh:mm:ss";
-		String mascara_saida = "dd/MM/yyyy hh:mm";
+		String mascara_entrada = "yyyyMMdd HH:mm:ss";
+		String mascara_saida = "dd/MM/yyyy HH:mm";
 		String data_esperada = "20/10/2023 20:15";
 
 		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"pt-br\" )";
 		Value value = chamarVisitor(padrao, getCliente());
 		assertEquals(data_esperada, value.asString());
 	}
+	
+	@Test
+	public void deveGerarExceptionQuandoDataInvalida() {
 		
-
+		String data = "2023XX20 20:15:15";
+		String mascara_entrada = "yyyyMMdd HH:mm:ss";
+		String mascara_saida = "dd/MM/yyyy HH:mm";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"pt-br\" )";
+		
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
+			Value value = chamarVisitor(padrao, getCliente());
+		});
+		
+		assertEquals("nao foi possivel converter para data ::  2023XX20 20:15:15", exception.getMessage());
+		
+	}
+	
+	@Test
+	public void deveGerarExceptionQuandoInformarLinguagemForaDoPadrao() {
+		
+		String data = "2023XX20 20:15:15";
+		String mascara_entrada = "yyyyMMdd HH:mm:ss";
+		String mascara_saida = "dd/MM/yyyy HH:mm";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"ptbr\" )";
+		
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
+			Value value = chamarVisitor(padrao, getCliente());
+		});
+		
+		assertEquals("linguagem e pais deve ter o padrao \"pt-br\".", exception.getMessage());
+		
+	}
+	
+	@Test
+	public void deveGerarExceptionQuandoInformarLinguagemForaDoPadraoComMaisDeUmTraco() {
+		
+		String data = "2023XX20 20:15:15";
+		String mascara_entrada = "yyyyMMdd HH:mm:ss";
+		String mascara_saida = "dd/MM/yyyy HH:mm";
+		String padrao = "date(\" " + data +"\", \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"p-t-br\" )";
+		
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
+			Value value = chamarVisitor(padrao, getCliente());
+		});
+		
+		assertEquals("linguagem e pais deve ter o padrao \"pt-br\".", exception.getMessage());
+		
+	}
+	
+	@Test
+	public void testeFuncion() {
+		System.out.println( this.funcao(s -> s.length(), "ola mundo") );
+	}
+	private Integer funcao(Function<String, Integer> funcao, String mensagem) {
+		return funcao.apply(mensagem);
+	}
+	
 }
