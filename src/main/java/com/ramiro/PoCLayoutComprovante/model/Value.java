@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Value {
 
-    public static Value VOID = new Value(new Object());
+    public static Value VOID = new Value("");
 
     final Object value;
     
@@ -30,6 +30,10 @@ public class Value {
     
     public boolean isBoolean(){
         return value instanceof Boolean;
+    }
+    
+    public boolean isString(){
+        return value instanceof String;
     }
 
     @Override

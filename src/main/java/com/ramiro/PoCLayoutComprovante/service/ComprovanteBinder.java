@@ -12,7 +12,7 @@ public class ComprovanteBinder {
 	@Autowired
 	private ServiceBind serviceBind;
 
-	public TemplateDto bind(Object comprovante, TemplateForm templateForm) throws ServiceBindException {
+	public TemplateDto bind(Object comprovante, TemplateForm templateForm) {
 
 		templateForm.getComponentes().stream()
 		
@@ -48,11 +48,12 @@ public class ComprovanteBinder {
 
 		return templateDto;
 	}
-	
+
 	private String encapsulaTry(ServiceBind serviceBind, Object comprovante, String padrao)  {
 		try {
 			return serviceBind.bind(padrao, comprovante);
 		}catch (ServiceBindException e ) {
+			e.printStackTrace();
 			return padrao;
 		}
 	

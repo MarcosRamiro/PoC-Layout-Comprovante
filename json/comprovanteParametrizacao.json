@@ -4,11 +4,11 @@
 			{
 				"tipo": "header",
 				"nome": "header-default",
-				"titulo": " abbreviate( capitalize( json(\"$.titulo\")), 15,25)"
+				"titulo": " \"Comprovante - \" + abbreviate( capitalize( json(\"$.titulo\")), 15, 25)"
 			},
 			{
 				"nome": "comprovante-bloco-default",
-				"titulo": " touppercase( \"aqui vai $ % _ o titulo do grupo\" ) ",
+				"titulo": " touppercase( \"aqui vai o titulo do grupo _ $ %\" ) ",
 				"tipo": "conteudo",
 				"ordenacao": 0,
 				"visibilidade": true,
@@ -27,7 +27,7 @@
 					},
 					{
 						"rotulo": "\"data\"",
-						"conteudo": "date(json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"), \"dd/MM/yyyy\", \"dd-MM-yyyy\")",
+						"conteudo": "date(json(\"$.detalhes[?(@.tituloAtributo == 'data do pagamento')].valorAtributo\"), \"dd/MM/yyyy\", \"dd-MM-yyyy\", \"pt-br\")",
 						"visibilidade": true,
 						"ordenacao": 1
 					}
@@ -35,13 +35,13 @@
 			},
 			{
 				"nome": "comprovante-mensagem-default",
-				"titulo": "\"xx\"",
+				"titulo": "\"xx\" + 25",
 				"ordenacao": 1,
 				"tipo": "conteudo",
 				"visibilidade": " tonumber(json(\"$.detalhes[?(@.tituloAtributo == 'valor do pagamento')].valorAtributo\")) == 200.42",
 				"dados": [
 					{
-						"rotulo": "",
+						"rotulo": "1+1",
 						"conteudo": "capitalize(\"Aqui vai uma mensagem legal para o meu cliente.\")",
 						"visibilidade": " 25555 > [11 + 5] ",
 						"ordenacao": 0

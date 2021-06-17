@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -23,16 +25,29 @@ import br.com.caelum.stella.tinytype.CPF;
 public class ComprovanteVisitorTeste {
 	
 	private static Cliente getCliente() {
+		
 		Cliente cliente = new Cliente();
 		cliente.setNome("MARCOS");
-		cliente.setIdade("31");
+		cliente.setIdade(31);
 		cliente.setCpf("70643401008");
 		cliente.setSalario(new BigDecimal("2000.50"));
+		
 		Cliente cliente2 = new Cliente();
 		cliente2.setNome("jose");
-		cliente2.setIdade("45");
+		cliente2.setIdade(45);
 		cliente2.setCpf("123");
 		cliente.setCliente(cliente2);
+		
+		Cliente cliente3 = new Cliente();
+		cliente3.setNome("joao");
+		cliente3.setIdade(52);
+		cliente3.setCpf("456");
+		
+		List<Cliente> clientes = new ArrayList<>();
+		
+		clientes.add(cliente2);
+		clientes.add(cliente3);
+		cliente.setClientes(clientes);
 		return cliente;
 	}
 	
@@ -252,6 +267,16 @@ public class ComprovanteVisitorTeste {
 		assertTrue(value.asBoolean());
 
 	}
+		
+	@Test
+	public void deveCompararDuasAfirmacoesSendoASegundaFalsa_And() {
+
+		String padrao = " 2 == 2 && 9 < 5 ";
+		Value value = chamarVisitor(padrao, new Object());
+		assertEquals("false", value.asString());
+		assertFalse(value.asBoolean());
+
+	}
 
 	@Test
 	public void deveCompararApenasUmaAfirmacaoEhVerdadeira_And() {
@@ -318,6 +343,10 @@ public class ComprovanteVisitorTeste {
 		String padrao = " \"O valor total foi \" + 2.2 ";
 		Value value = chamarVisitor(padrao, new Object());
 		assertEquals("O valor total foi 2.2", value.asString());
+		
+		padrao = " 2.2 + \" foi o valor total\"";
+		value = chamarVisitor(padrao, new Object());
+		assertEquals("2.2 foi o valor total", value.asString());
 
 	}
 
@@ -444,6 +473,24 @@ public class ComprovanteVisitorTeste {
 		assertEquals("jose", value.asString());
 
 	}
+	
+	@Test
+	public void deveObterPrimeiroValorDeUmaLista_Json() {
+		
+		String padrao = "json(\"$.clientes[?(@.idade > 2)].nome\")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("jose", value.asString());
+
+	}
+	
+	@Test
+	public void deveRetornarVazioQuandoAcharListaVazia_Json() {
+		
+		String padrao = "json(\"$.clientes[?(@.idade > 99)].nome\")";
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("", value.asString());
+
+	}
 
 	@Test
 	public void deveCombinarFuncoesJsonECaptalize() {
@@ -547,6 +594,19 @@ public class ComprovanteVisitorTeste {
 		});
 		
 		assertTrue(exception.getMessage().contains("token recognition error"));
+		
+	}
+	
+	@Test
+	public void deveGerarErroQuandoInformarPadraoComErroParaFuncaoJson() {
+
+		String padrao = " json ( \"$.cliente.clientes[0].campoNaoExiste\" )) ";
+		
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
+			Value value = chamarVisitor(padrao, getCliente());
+		});
+		
+		assertEquals("Erro ao chamar JsonPath. Padrao recebido: $.cliente.clientes[0].campoNaoExiste.", exception.getMessage());		
 		
 	}
 	
@@ -957,11 +1017,51 @@ public class ComprovanteVisitorTeste {
 	}
 	
 	@Test
-	public void testeFuncion() {
-		System.out.println( this.funcao(s -> s.length(), "ola mundo") );
-	}
-	private Integer funcao(Function<String, Integer> funcao, String mensagem) {
-		return funcao.apply(mensagem);
+	public void deveGerarExceptionQuandoInformarDataNaoString() {
+		
+		String mascara_entrada = "yyyyMMdd HH:mm:ss";
+		String mascara_saida = "dd/MM/yyyy HH:mm";
+		String padrao = "date( 20210321, \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"p-t-br\" )";
+		
+		Exception exception = assertThrows(ParseCancellationException.class, () -> {
+			Value value = chamarVisitor(padrao, getCliente());
+		});
+		
+		assertEquals("valor deve ser string :: 20210321", exception.getMessage());
+		
+		
+		String padrao2 = "date( true, \" " + mascara_entrada +   "\", \"" +  mascara_saida + "\", \"p-t-br\" )";
+		
+		Exception exception2 = assertThrows(ParseCancellationException.class, () -> {
+			Value value = chamarVisitor(padrao2, getCliente());
+		});
+		
+		assertEquals("valor deve ser string :: true", exception2.getMessage());
+		
 	}
 	
+	@Test
+	public void naoDeveCompararNumeroComTexto() {
+		
+		String padrao = " 1 >= \"dois\" ";
+		
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("", value.asString());
+		
+		padrao = " \"dois\" < 5 ";
+		value = chamarVisitor(padrao, getCliente());
+		
+		assertEquals("", value.asString());
+		
+	}
+	
+	@Test
+	public void naoDeveCompararRelacionalParaTexto() {
+		
+		String padrao = " \"um\" >= \"dois\" ";
+		
+		Value value = chamarVisitor(padrao, getCliente());
+		assertEquals("", value.asString());
+		
+	}		
 }

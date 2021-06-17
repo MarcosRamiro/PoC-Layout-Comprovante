@@ -1,15 +1,22 @@
 package com.ramiro.poclayoutcomprovante.service.visitor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Cliente{
 	private String nome;
-	private String idade;
+	private int idade;
 	private String cpf;
 	private Cliente cliente;
 	private BigDecimal salario;
+	private List<Cliente> clientes;
 	
-	
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
 	public BigDecimal getSalario() {
 		return salario;
 	}
@@ -34,10 +41,10 @@ public class Cliente{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getIdade() {
+	public int getIdade() {
 		return idade;
 	}
-	public void setIdade(String idade) {
+	public void setIdade(int idade) {
 		this.idade = idade;
 	}
 	

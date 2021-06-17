@@ -52,9 +52,6 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 	public ComprovanteVisitor(Object object) {
 
-		if (object == null)
-			throw new  ParseCancellationException("object is null!");
-
 		this.json = new GsonBuilder().create().toJson(object);
 	}
 
@@ -67,7 +64,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		String[] lang = linguagemEPais.split("-");
 
-		if (!(lang != null && lang.length == 2))
+		if (lang.length != 2)
 			throw new ParseCancellationException(msgErro);
 
 		return new Locale(lang[0], lang[1]);
@@ -76,7 +73,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 	private String obterValorJson(String padrao) {
 
-		if (padrao == null || (!padrao.contains("$")))
+		if (!padrao.contains("$"))
 			return padrao;
 
 		try {
@@ -91,8 +88,8 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 			return obj == null ? "" : obj.toString();
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			return padrao;
+			//e.printStackTrace();
+			throw new ParseCancellationException("Erro ao chamar JsonPath. Padrao recebido: " +  padrao + ".", e);
 		}
 	}
 
@@ -293,7 +290,7 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 
 		Value value = this.visit(ctx.value);
 
-		if (value.isDecimal() || value.isBoolean())
+		if (!value.isString())
 			throw new ParseCancellationException("valor deve ser string :: " + value.asString());
 
 		String masc_entrada = this.visit(ctx.masc_e).asString();
@@ -337,10 +334,10 @@ public class ComprovanteVisitor extends ComprovBaseVisitor<Value> {
 	public Value visitToNumber(ToNumberContext ctx) {
 
 		Value value = this.visit(ctx.expressao());
-		
-		if(value.isDecimal())
-			return  value;
-		
+
+		if (value.isDecimal())
+			return value;
+
 		String tratado = value.asString().replaceAll("\\s+", "");
 
 		try {

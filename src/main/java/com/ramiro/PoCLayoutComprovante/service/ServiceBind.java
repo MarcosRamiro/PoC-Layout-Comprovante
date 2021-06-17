@@ -19,7 +19,7 @@ public class ServiceBind {
 		try {
 			return this.tratar(padrao, object);
 		} catch (ParseCancellationException e) {
-			throw new ServiceBindException("Erro ao tentar tratar o tratar o padrao: " + padrao, e);
+			throw new ServiceBindException("Erro ao tentar tratar o padrao: " + padrao, e);
 		}
 
 	}
