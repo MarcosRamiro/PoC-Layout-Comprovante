@@ -21,37 +21,16 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr4-runtime</artifactId>
-			<version>${version.antlr4}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jayway.jsonpath</groupId>
-			<artifactId>json-path</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-text</artifactId>
-			<version>1.9</version>
-		</dependency>
-
-		<dependency>
-			<groupId>br.com.caelum.stella</groupId>
-			<artifactId>caelum-stella-core</artifactId>
-			<version>2.1.2</version>
+			<groupId>com.ramiro</groupId>
+			<artifactId>bind-service</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -80,27 +59,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.antlr</groupId>
-				<artifactId>antlr4-maven-plugin</artifactId>
-				<version>${version.antlr4}</version>
-				<configuration>
-					<arguments>
-						<argument>-package</argument>
-						<argument>com.ramiro.poclayoutcomprovante.generated</argument>
-					</arguments>
-					<visitor>true</visitor>
-					<listener>false</listener>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>antlr4</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

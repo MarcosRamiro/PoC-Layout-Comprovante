@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ramiro.poclayoutcomprovante.form.TemplateForm;
+import com.ramiro.binder.ServiceBind;
+import com.ramiro.binder.ServiceBindException;
 import com.ramiro.poclayoutcomprovante.dto.TemplateDto;
 
 @Service

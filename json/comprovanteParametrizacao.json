@@ -4,7 +4,7 @@
 			{
 				"tipo": "header",
 				"nome": "header-default",
-				"titulo": " \"Comprovante - \" + abbreviate( capitalize( json(\"$.titulo\")), 15, 25)"
+				"titulo": " \"Comprovante - \" + abbreviate( capitalize( tolowercase( json(\"$.titulo\"))), 15, 25)"
 			},
 			{
 				"nome": "comprovante-bloco-default",
@@ -42,7 +42,7 @@
 				"dados": [
 					{
 						"rotulo": "1+1",
-						"conteudo": "capitalize(\"Aqui vai uma mensagem legal para o meu cliente.\")",
+						"conteudo": "capitalize( tolowercase(\"Aqui VAI uma MENSAGEM legal para o meu cliente.\") )",
 						"visibilidade": " 25555 > [11 + 5] ",
 						"ordenacao": 0
 					},
